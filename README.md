@@ -38,4 +38,4 @@ In stead of `hide: true` you can specify the property to only be hiden for `toJS
 
 * Implement turning on and off on a single invocation (if possible). Something like this:
 
-    var jsonUser = user.toJSON({ hide: false });
+    `var jsonUser = user.toJSON({ hide: false });`
