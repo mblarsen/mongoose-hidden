@@ -34,6 +34,15 @@ A Mongoose schema plugin that hooks into `toJSON` and `toObject` to allow filter
 
 In stead of `hide: true` you can specify the property to only be hiden for `toJSON` or `toObject` be writing: `hideJSON: true` or `hideObject` respectivly.
 
+Optionally you can use a `function` for `hide`, `hideJSON` or `hideObject`. The function has the following signature and must return `true` if
+the property should be filtered:
+
+    function (doc, ret) {
+        // return true to filter
+    }
+    
+The paramters `doc` and `ret` are passed in from the transform fuction. See `toJSON` and `toObject` in the Mongoose documentation.
+
 # TODO
 
 * Implement turning on and off on a single invocation (if possible). Something like this:

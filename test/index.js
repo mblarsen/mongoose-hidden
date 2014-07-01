@@ -2,9 +2,9 @@ var should = require('should'),
   mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   mongooseHidden = require('../index');
-  
+
 describe("mongoose-hidden", function () {
-  
+
   before(function(done) {
     mongoose.connect('mongodb://localhost/mongoose-hidden', function(err) {
       if (err) {
@@ -19,7 +19,7 @@ describe("mongoose-hidden", function () {
   after(function(done) {
     mongoose.connection.close(done)
   })
-  
+
   describe("A model with no hidden properties defined", function () {
     it("Should return all properties", function (done) {
       var UserSchema = new Schema({
@@ -77,7 +77,7 @@ describe("mongoose-hidden", function () {
       });
     });
   });
-  
+
   describe("Default hiding turned off", function () {
     it("Shouldn't hide any properties", function (done) {
       var UserHiddenSchema = new Schema({
@@ -95,7 +95,7 @@ describe("mongoose-hidden", function () {
         userJson.password.should.equal("secret");
         should.exist(userJson["__v"]);
         should.exist(userJson["_id"]);
-      
+
         done();
       });
     });
@@ -128,7 +128,7 @@ describe("mongoose-hidden", function () {
         done();
       });
     });
-  });  
+  });
 
   describe("Default hiding turned off for object only", function () {
     it("Shouldn't hide any properties", function (done) {
@@ -157,8 +157,8 @@ describe("mongoose-hidden", function () {
         done();
       });
     });
-  });  
-  
+  });
+
   describe("Default hiding on, JSON option property", function () {
     it("Shouldn't hide any properties", function (done) {
       var UserHiddenSchema = new Schema({
@@ -182,7 +182,7 @@ describe("mongoose-hidden", function () {
         done();
       });
     });
-  });  
+  });
 
   describe("Default hiding on, object option property", function () {
     it("Shouldn't hide any properties", function (done) {
@@ -208,7 +208,7 @@ describe("mongoose-hidden", function () {
       });
     });
   });
-  
+
   describe("Default hiding on, object option property off", function () {
     it("Shouldn't hide any properties", function (done) {
       var UserHiddenSchema = new Schema({
@@ -232,5 +232,128 @@ describe("mongoose-hidden", function () {
         done();
       });
     });
-  });  
+  });
+
+  describe("A model with a hidden properties defined using function", function () {
+    it("Shouldn't return password property for Joe for both JSON and object", function (done) {
+      var testFunction = function (doc, ret) {
+        return doc.name === 'Joe';
+      }
+      var UserHiddenSchema = new Schema({
+        name: String,
+        email: String,
+        password: { type: String, hide: testFunction }
+      });
+      UserHiddenSchema.plugin(mongooseHidden);
+      var UserHidden = mongoose.model('UserHidden9', UserHiddenSchema);
+      
+      var userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userJson = userHidden.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.not.exist(userJson.password);
+      
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userJson = userHidden.toJSON();
+      userJson.name.should.equal("Marie");
+      userJson.email.should.equal("marie@example.com");
+      userJson.password.should.equal("secret");
+
+      userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userObject = userHidden.toObject();
+      userObject.name.should.equal("Joe");
+      userObject.email.should.equal("joe@example.com");
+      should.not.exist(userObject.password);
+      
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userObject = userHidden.toJSON();
+      userObject.name.should.equal("Marie");
+      userObject.email.should.equal("marie@example.com");
+      userObject.password.should.equal("secret");
+
+      done();
+    });
+  });
+
+  describe("A model with a hidden properties defined using function for JSON", function () {
+    it("Shouldn't return password property for Joe for only for JSON", function (done) {
+      var testFunction = function (doc, ret) {
+        return doc.name === 'Joe';
+      }
+      var UserHiddenSchema = new Schema({
+        name: String,
+        email: String,
+        password: { type: String, hideJSON: testFunction }
+      });
+      UserHiddenSchema.plugin(mongooseHidden);
+      var UserHidden = mongoose.model('UserHidden10', UserHiddenSchema);
+
+      var userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userJson = userHidden.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.not.exist(userJson.password);
+
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userJson = userHidden.toJSON();
+      userJson.name.should.equal("Marie");
+      userJson.email.should.equal("marie@example.com");
+      userJson.password.should.equal("secret");
+      
+      userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userObject = userHidden.toObject();
+      userObject.name.should.equal("Joe");
+      userObject.email.should.equal("joe@example.com");
+      userObject.password.should.equal("secret");
+
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userObject = userHidden.toObject();
+      userObject.name.should.equal("Marie");
+      userObject.email.should.equal("marie@example.com");
+      userObject.password.should.equal("secret");
+      
+      done();
+    });
+  });
+  
+  describe("A model with a hidden properties defined using function for JSON", function () {
+    it("Shouldn't return password property for Joe for only for object", function (done) {
+      var testFunction = function (doc, ret) {
+        return doc.name === 'Joe';
+      }
+      var UserHiddenSchema = new Schema({
+        name: String,
+        email: String,
+        password: { type: String, hideObject: testFunction }
+      });
+      UserHiddenSchema.plugin(mongooseHidden);
+      var UserHidden = mongoose.model('UserHidden11', UserHiddenSchema);
+
+      var userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userJson = userHidden.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      userJson.password.should.equal("secret");
+
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userJson = userHidden.toJSON();
+      userJson.name.should.equal("Marie");
+      userJson.email.should.equal("marie@example.com");
+      userJson.password.should.equal("secret");
+      
+      userHidden = new UserHidden({ name: "Joe", email: "joe@example.com", password: "secret" });
+      var userObject = userHidden.toObject();
+      userObject.name.should.equal("Joe");
+      userObject.email.should.equal("joe@example.com");
+      should.not.exist(userObject.password);
+
+      userHidden = new UserHidden({ name: "Marie", email: "marie@example.com", password: "secret" });
+      userObject = userHidden.toObject();
+      userObject.name.should.equal("Marie");
+      userObject.email.should.equal("marie@example.com");
+      userObject.password.should.equal("secret");
+      
+      done();
+    });
+  });
 });
