@@ -6,14 +6,12 @@ var should = require('should'),
 describe("mongoose-hidden", function () {
   
   before(function(done) {
-    // TODO: get rid of this duplication, with mocha-mongoose?
-    mongoose.connect('mongodb://localhost/mongoose-trackable-test', function(err) {
+    mongoose.connect('mongodb://localhost/mongoose-hidden', function(err) {
       if (err) {
         console.error('MongoDB: ' + err.message)
         console.error('MongoDB is running? Is it accessible by this application?')
         return done(err)
       }
-      // TODO: dropDatabase is quicker than dropping all the collections?
       mongoose.connection.db.dropDatabase(done)
     })
   })
