@@ -10,6 +10,8 @@
   "keywords": [ "mongoose", "hidden", "hide", "property", "schema" ],
   "author": "Michael Bøcker-Larsen <mblarsen@gmail.com>",
   "license": "MIT",
+	"repository" : { "type": "git", "url" : "git://github.com/mblarsen/mongoose-hidden.git" },
+	"bugs"  : "http://github.com/mblarsen/mongoose-hidden/issues",
   "devDependencies": {
     "mongoose": "~3.8.12",
     "should": "~4.0.4",
