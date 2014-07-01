@@ -1,0 +1,21 @@
+{
+  "name": "mongoose-hidden",
+  "version": "0.1.0",
+  "description": "Hides certain model properties when invoking toJSON or toObject.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha -s 2000 -t 5000 -R spec test/*.js",
+    "test-debug": "export DEBUG=mongoose-hidden ; node_modules/mocha/bin/mocha -R spec test/*.js"
+  },
+  "keywords": [ "mongoose", "hidden", "hide", "property", "schema" ],
+  "author": "Michael Bøcker-Larsen <mblarsen@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mongoose": "~3.8.12",
+    "should": "~4.0.4",
+    "mocha": "~1.20.1"
+  },
+  "dependencies": {
+    "debug": "~1.0.2"
+  }
+}
