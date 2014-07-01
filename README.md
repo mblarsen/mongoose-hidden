@@ -1,4 +1,6 @@
-# mongoose-hidden
+# mongoose-hidden 
+
+[![build status](https://secure.travis-ci.org/mblarsen/mongoose-hidden.png)](http://travis-ci.org/mblarsen/mongoose-hidden)
 
 A Mongoose schema plugin that hooks into `toJSON` and `toObject` to allow filtering of properties you usually do not want to sent client-side.
 
