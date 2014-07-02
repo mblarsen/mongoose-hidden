@@ -45,6 +45,7 @@ The paramters `doc` and `ret` are passed in from the transform fuction. See `toJ
 
 # TODO
 
+* Figure out how to attach `hide` option to virtuals.
 * Implement turning on and off on a single invocation (if possible). Something like this:
 
     `var jsonUser = user.toJSON({ hide: false });`
