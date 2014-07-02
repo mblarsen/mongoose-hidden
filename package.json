@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "export DEBUG=mongoose-hidden ; node_modules/mocha/bin/mocha -s 2000 -t 5000 -R spec test/*.js"
+    "test": "node_modules/mocha/bin/mocha -s 2000 -t 5000 -R spec test/*.js"
   },
   "license": "MIT",
 	"bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
