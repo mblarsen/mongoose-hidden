@@ -1,7 +1,7 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  mongooseHidden = require('../index');
+  mongooseHidden = require('../index')();
 
 describe("mongoose-hidden", function () {
   var averageJoe = { name: "Joe", email: "joe@example.com", password: "secret" };
@@ -13,7 +13,6 @@ describe("mongoose-hidden", function () {
   
   // Convenience method for creating a new schema, attaching plugin and returning a model object
   var nextModel = function (schemaProperties, pluginOptions) {
-    
     var schema = new Schema(schemaProperties);
     schema.plugin(mongooseHidden, pluginOptions);
     return mongoose.model('User' + nextModel.modelCount++, schema);
@@ -338,6 +337,46 @@ describe("mongoose-hidden", function () {
       userObject.password.should.equal(valuePassword);
       
       done();
+    });
+  });
+  
+  describe("A model with password and password set as default hidden", function () {
+    it("Shouldn't return password", function (done) {
+      var schema = new Schema({
+        name: String,
+        email: String,
+        password: String
+      });
+      schema.plugin(require('../index')({ defaultHidden: { "password" : true }}));
+      var User = mongoose.model('DefaultHiddenUser', schema);
+      var user = new User(averageJoe);
+      user.save(function () {
+        var userJson = user.toJSON();
+        userJson.name.should.equal("Joe");
+        userJson.email.should.equal("joe@example.com");
+        should.not.exist(userJson["password"]);
+        done();
+      });
+    });
+  });
+  
+  describe("A model with password and password set as default hidden overriden with option", function () {
+    it("Should return password", function (done) {
+      var schema = new Schema({
+        name: String,
+        email: String,
+        password: String
+      });
+      schema.plugin(require('../index')({ defaultHidden: { "password" : true }}), { defaultHidden: { }});
+      var User = mongoose.model('DefaultHiddenUserOverriden', schema);
+      var user = new User(averageJoe);
+      user.save(function () {
+        var userJson = user.toJSON();
+        userJson.name.should.equal("Joe");
+        userJson.email.should.equal("joe@example.com");
+        userJson.password.should.equal(valuePassword);
+        done();
+      });
     });
   });
 });
