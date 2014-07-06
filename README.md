@@ -4,7 +4,7 @@
 
 A Mongoose schema plugin that hooks into `toJSON` and `toObject` to allow filtering of properties you usually do not want to sent client-side.
 
-# Intall
+# Install
 
 `npm install mongoose-hidden`
 
@@ -32,7 +32,7 @@ A Mongoose schema plugin that hooks into `toJSON` and `toObject` to allow filter
     });
 
 
-In stead of `hide: true` you can specify the property to only be hiden for `toJSON` or `toObject` be writing: `hideJSON: true` or `hideObject` respectivly.
+In stead of `hide: true` you can specify the property to only be hidden for `toJSON` or `toObject` be writing: `hideJSON: true` or `hideObject` respectively.
 
 Optionally you can use a `function` for `hide`, `hideJSON` or `hideObject`. The function has the following signature and must return `true` if
 the property should be filtered:
@@ -41,7 +41,7 @@ the property should be filtered:
         // return true to filter
     }
 
-The paramters `doc` and `ret` are passed in from the transform fuction. See `toJSON` and `toObject` in the Mongoose documentation.
+The parameters `doc` and `ret` are passed in from the transform function. See `toJSON` and `toObject` in the Mongoose documentation.
 
 ### Default Hidden
 
@@ -73,7 +73,7 @@ A different way to configure default hidden properties, is when applying the plu
 
     UserSchema.plugin(mongooseHidden, { defaultHidden: { password: true } });
     
-Doing it this way instead of adding it to the schema direclty allows you to conditionally hide properties. E.g. 
+Doing it this way instead of adding it to the schema directly allows you to conditionally hide properties. E.g. 
 
     if (app === 'web') {
         UserSchema.plugin(mongooseHidden, { defaultHidden: { "_id": true, password: true } });
@@ -91,12 +91,36 @@ Note: you can change the default behaviour for this `defaultHidden` properties b
     
 What this does, is that when you invoke `toObject` the default hidden properties will no longer be exclude, but they will when invoking `toJSON`.
 
+# Virtuals
+
+From version `0.3.1` hidden of virtuals was introduced.
+
+    schema.set('toJSON', { virtuals: true });
+    schema.set('toObject', { virtuals: true });
+    schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
+    
+Be sure to include the plugin after you turn on virtuals.
+
+The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`, but remember that if you don't turn on virtuals for `toObject`, `fullname` in the above example will NOT be hidden, even though it specifies that only JSON is hidden.
+
 # Changes
+
+From `0.3.0` => `0.3.1`:
+
+* NEW: Introduced hiding of virtuals.
 
 From `0.2.1` => `0.3.0`:
 
 * `require("mongoose-hidden")` is now `require("mongoose-hidden")(defaults)` with optional defaults.
 
+# Limitations
+
+* Always set `{ getters: true, virtuals: true }` before installing plugin:
+
+    schema.set('toJSON', { getters: true, virtuals: true });
+    schema.plugin(require(mongooseHidden));
+    
+    
 # TODO
 
 * Figure out how to attach `hide` option to virtuals.

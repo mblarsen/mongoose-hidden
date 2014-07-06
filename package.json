@@ -1,6 +1,6 @@
 {
   "name": "mongoose-hidden",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Michael Bøcker-Larsen <mblarsen@gmail.com>",
   "description": "Hides certain model properties when invoking toJSON or toObject.",
   "keywords": [
@@ -16,7 +16,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha -s 2000 -t 5000 -R spec test/*.js"
+    "test": "node_modules/mocha/bin/mocha -s 2000 -t 3000 -R spec test/*.js"
   },
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
