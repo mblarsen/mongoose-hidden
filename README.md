@@ -1,6 +1,7 @@
 # mongoose-hidden
 
-[![build status](https://secure.travis-ci.org/mblarsen/mongoose-hidden.png)](http://travis-ci.org/mblarsen/mongoose-hidden)
+[![build status](https://secure.travis-ci.org/mblarsen/mongoose-hidden.png)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Dependencies](https://david-dm.org/mblarsen/mongoose-hidden.png)](https://david-dm.org/mblarsen/mongoose-hidden)
+
 
 [![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
 
