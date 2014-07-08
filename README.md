@@ -6,7 +6,7 @@
 
 [![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
 
-A Mongoose schema plugin that hooks into `toJSON` and `toObject` to allow filtering of properties you usually do not want to sent client-side.
+A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow filtering of properties you usually do not want to sent client-side.
 
 # Install
 
@@ -95,7 +95,7 @@ Note: you can change the default behaviour for this `defaultHidden` properties b
 
 What this does, is that when you invoke `toObject` the default hidden properties will no longer be exclude, but they will when invoking `toJSON`.
 
-## Virtuals
+### Virtuals
 
 From version `0.3.1` hidden of virtuals was introduced.
 
