@@ -3,7 +3,6 @@
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Dependencies](http://img.shields.io/david/mblarsen/mongoose-hidden.svg
 )](https://david-dm.org/mblarsen/mongoose-hidden) ![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)
 
-
 [![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
 
 A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow filtering of properties you usually do not want to sent client-side.
@@ -108,6 +107,10 @@ Be sure to include the plugin after you turn on virtuals.
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`, but remember that if you don't turn on virtuals for `toObject`, `fullname` in the above example will NOT be hidden, even though it specifies that only JSON is hidden.
 
 # Changes
+
+From `0.3.2` => `0.4.0`:
+
+* Changed: Default `virtuals` value set to `{ }` meaning `id` will no longer be hidden by default.
 
 From `0.3.1` => `0.3.2`:
 

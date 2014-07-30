@@ -414,7 +414,7 @@ describe("mongoose-hidden", function () {
       userJson.email.should.equal("joe@example.com");
       should.exist(userJson['niceEmail']);
       userJson.niceEmail.should.equal('"Joe" <joe@example.com>');
-      should.not.exist(userJson['id']);
+      // should.not.exist(userJson['id']);
       should.not.exist(userJson.password);
       done();
     });
@@ -434,7 +434,7 @@ describe("mongoose-hidden", function () {
       var userJson = user.toJSON();
       userJson.name.should.equal("Joe");
       userJson.email.should.equal("joe@example.com");
-      should.not.exist(userJson['id']);
+      // should.not.exist(userJson['id']);
       should.not.exist(userJson['niceEmail']);
       should.not.exist(userJson.password);
       done();
