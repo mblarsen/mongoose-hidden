@@ -131,6 +131,7 @@ From `0.2.1` => `0.3.0`:
     schema.set('toJSON', { getters: true, virtuals: true });
     schema.plugin(require(mongooseHidden));
 * If there is a transform function defined already it will be overridden. Fix planned.
+* Recursive use of hide not supported.
 
 # TODO
 
