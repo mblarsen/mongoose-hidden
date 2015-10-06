@@ -22,14 +22,11 @@
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
   "dependencies": {
     "debug": "^2.2.0",
-    "lodash": "~3.10.1",
-    "mocha": "^1.20.1",
-    "mongoose": "^3.8.21",
-    "should": "^4.0.4"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
-    "mongoose": "~4.1.10",
-    "should": "~7.1.0",
-    "mocha": "~2.3.3"
+    "mongoose": "^4.1.10",
+    "should": "^7.1.0",
+    "mocha": "^2.3.3"
   }
 }
