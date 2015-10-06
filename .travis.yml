@@ -1,10 +1,6 @@
 language: node_js
 sudo: false
 node_js:
-<<<<<<< HEAD
   - "0.10"
 -services:
   - mongodb
-=======
-  - "0.10"
->>>>>>> ae816d9d18df5e4d7f344fe73d2df8319f3ae416
