@@ -6,6 +6,12 @@ var should = require('should'),
 describe("mongoose-hidden", function () {
   var averageJoe = { name: "Joe", email: "joe@example.com", password: "secret" };
   var averageMarie = { name: "Marie", email: "marie@example.com", password: "secret" };
+  
+  var company = {
+    "_id": "5613a1c7e1095d8e71ae90da",
+    "name": "GOGGLE",
+    "code": "GOG",
+  };
 
   var keyVersion = "__v";
   var keyId = "_id";
@@ -466,6 +472,43 @@ describe("mongoose-hidden", function () {
       should.not.exist(userObject['niceEmail']);
       should.not.exist(userObject.password);
       done();
+    });
+  });
+
+  // Ticket: https://github.com/mblarsen/mongoose-hidden/issues/1
+  describe("A document with nested documents when hiding", function () {
+    it("Shouldn't remove it's nested documents", function (done) {
+      var companySchema = new Schema({
+        name: String,
+        code: String,
+      });
+      var Company = mongoose.model('Company', companySchema);
+      var companyInstance = new Company(company);
+    
+      var userSchema = new Schema({
+        name: String,
+        email: String,
+        company: { type: Schema.ObjectId, ref: 'Company' },
+        password: { type: String, hide: true }
+      });
+      userSchema.plugin(mongooseHidden);
+      var User = mongoose.model('CompanyMan', userSchema);
+      var user = new User(averageJoe);
+    
+      companyInstance.save(function() {
+        user.company = companyInstance._id;
+        user.save(function() {
+          User.findOne().populate('company').exec(function (err, freshUser) {
+            should.exist(freshUser.company);
+            freshUser.company.name.should.equal('GOGGLE');
+            userJson = freshUser.toJSON();
+            should.not.exist(userJson.password);
+            should.exist(userJson.company);
+            should.equal("GOGGLE", userJson.company.name);
+            done();
+          });
+        });
+      });
     });
   });
 });
