@@ -16,7 +16,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha -s 2000 -t 3000 -R spec test/*.js"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
@@ -25,6 +25,8 @@
     "lodash": "^4.1.0"
   },
   "devDependencies": {
+    "coveralls": "^2.11.6",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "mongoose": "^4.3.7",
     "should": "^8.2.1"
