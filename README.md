@@ -1,7 +1,8 @@
 # mongoose-hidden
 
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Dependencies](http://img.shields.io/david/mblarsen/mongoose-hidden.svg
-)](https://david-dm.org/mblarsen/mongoose-hidden) ![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)
+)](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) ![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)
+
 
 [![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
 
