@@ -6,7 +6,7 @@ var should = require('should'),
 describe("mongoose-hidden", function () {
   var averageJoe = { name: "Joe", email: "joe@example.com", password: "secret" };
   var averageMarie = { name: "Marie", email: "marie@example.com", password: "secret" };
-  
+
   var company = {
     "_id": "5613a1c7e1095d8e71ae90da",
     "name": "GOGGLE",
@@ -20,6 +20,7 @@ describe("mongoose-hidden", function () {
   // Convenience method for creating a new schema, attaching plugin and returning a model object
   var nextModel = function (schemaProperties, pluginOptions) {
     var schema = new Schema(schemaProperties);
+    // schema.set('toJSON', { getters: false, virtuals: false });
     schema.plugin(mongooseHidden, pluginOptions);
     return mongoose.model('User' + nextModel.modelCount++, schema);
   };
@@ -393,7 +394,7 @@ describe("mongoose-hidden", function () {
         email: String,
         password: { type: String, hide: true }
       });
-      User.schema.virtual('niceEmail').get(function () { console.log('aaa'); return '"' + this.name + '" <' + this.email + '>'; });
+      User.schema.virtual('niceEmail').get(function () { return '"' + this.name + '" <' + this.email + '>'; });
       var user = new User(averageJoe);
       var userJson = user.toJSON();
       userJson.name.should.equal("Joe");
@@ -484,7 +485,7 @@ describe("mongoose-hidden", function () {
       });
       var Company = mongoose.model('Company', companySchema);
       var companyInstance = new Company(company);
-    
+
       var userSchema = new Schema({
         name: String,
         email: String,
@@ -494,7 +495,7 @@ describe("mongoose-hidden", function () {
       userSchema.plugin(mongooseHidden);
       var User = mongoose.model('CompanyMan', userSchema);
       var user = new User(averageJoe);
-    
+
       companyInstance.save(function() {
         user.company = companyInstance._id;
         user.save(function() {
@@ -509,6 +510,49 @@ describe("mongoose-hidden", function () {
           });
         });
       });
+    });
+  });
+
+  describe("A model with a transform", function () {
+    it("Should transform", function (done) {
+      var userSchema = new Schema({
+        name: String,
+        password: { type: String, hide: true }
+      });
+
+      userSchema.set('toJSON', { transform: function (doc, ret, opt) {
+        ret['name'] = 'Mr. ' + ret['name'];
+        return ret;
+      }});
+
+      var User = mongoose.model('MrCompanyMan', userSchema);
+      var user = new User(averageJoe);
+
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Mr. Joe");
+      userJson.password.should.equal(valuePassword);
+      done();
+    });
+    it("Should still transform after adding plugin", function (done) {
+      var userSchema = new Schema({
+        name: String,
+        password: { type: String, hide: true }
+      });
+
+      userSchema.set('toJSON', { transform: function (doc, ret, opt) {
+        ret['name'] = 'Mr. ' + ret['name'];
+        return ret;
+      }});
+
+      userSchema.plugin(mongooseHidden);
+
+      var User = mongoose.model('AnotherMrCompanyMan', userSchema);
+      var user = new User(averageJoe);
+
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Mr. Joe");
+      should.not.exist(userJson.password);
+      done();
     });
   });
 });
