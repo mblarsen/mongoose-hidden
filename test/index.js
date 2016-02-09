@@ -555,4 +555,16 @@ describe("mongoose-hidden", function () {
       done();
     });
   });
+
+  // https://github.com/mblarsen/mongoose-hidden/issues/3
+  describe("A model with other documents", function () {
+      it("Should return the object property", function (done) {
+          var User = nextModel({ name: String, email: { prefix: String, suffix: String }, password: String });
+          var testUser = {name: "Joe", email: {prefix: 'bla', suffix: 'moep.com'}, password: "secret"};
+          var user = new User(testUser);
+          var userJson = user.toObject();
+          userJson.should.deepEqual(testUser);
+          done();
+      });
+  });
 });

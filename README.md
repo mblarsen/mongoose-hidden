@@ -124,6 +124,10 @@ All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
 
+**0.6.1**
+
+Fixes #3
+
 **0.6.0**
 
 New: If a `transform` has already been set before loading plugin that function will be applied before applying plugin tranforms. 
