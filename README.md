@@ -1,9 +1,7 @@
 # mongoose-hidden
 
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Dependencies](http://img.shields.io/david/mblarsen/mongoose-hidden.svg
-)](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) ![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg) [![Support via Gittip](http://img.shields.io/gittip/mblarsen.svg?style=flat)](https://www.gittip.com/mblarsen/)
-
-
+)](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) ![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg) [![Support via Gittip](http://img.shields.io/gittip/mblarsen.svg?style=flat)](https://www.gittip.com/mblarsen/) [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/mblarsen?utm_source=github&utm_medium=button&utm_term=mblarsen&utm_campaign=github) [![Join the chat at https://gitter.im/mblarsen/mongoose-hidden](https://badges.gitter.im/mblarsen/mongoose-hidden.svg)](https://gitter.im/mblarsen/mongoose-hidden?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
 
