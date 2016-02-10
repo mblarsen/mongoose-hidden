@@ -132,7 +132,7 @@ All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 **0.6.1**
 
-Fixes #3
+Fixes [Issue #3](https://github.com/mblarsen/mongoose-hidden/issues/3)
 
 **0.6.0**
 
