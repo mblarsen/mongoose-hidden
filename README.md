@@ -168,7 +168,7 @@ Changed: `require("mongoose-hidden")` is now `require("mongoose-hidden")(default
 
 # TODO
 
-* ~~If there is a transform function defined on `toJSON` and `toObject` apply that first and then run the hide function.~~ _Implemented in v0.6_
-* Implement turning on and off on a single invocation (if possible). Something like this:
+- [x] ~~If there is a transform function defined on `toJSON` and `toObject` apply that first and then run the hide function.~~ _Implemented in v0.6_
+- [ ] Implement turning on and off on a single invocation (if possible). Something like this:
 
     `var jsonUser = user.toJSON({ hide: false });`
