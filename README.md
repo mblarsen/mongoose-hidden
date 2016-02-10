@@ -4,15 +4,15 @@
 )](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)  
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/mblarsen) [![Join the chat at https://gitter.im/mblarsen/mongoose-hidden](https://badges.gitter.im/mblarsen/mongoose-hidden.svg)](https://gitter.im/mblarsen/mongoose-hidden?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![NPM](https://nodei.co/npm/mongoose-hidden.png?downloads=true)](https://nodei.co/npm/mongoose-hidden/)
-
-A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow filtering of properties you usually do not want to sent client-side.
+A Mongoose schema plugin that hooks into _toJSON()_ and _toObject()_ to allow hiding of properties you usually do not want to sent client-side.
 
 # Install
 
-`npm install mongoose-hidden`
+    npm install --save mongoose-hidden
 
 # Usage
+
+First setup a schema and attach the plugin:
 
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
@@ -26,47 +26,50 @@ A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow fi
 
     UserSchema.plugin(mongooseHidden);
 
+Now let's create a model:
+
     var User = mongoose.model('User', UserSchema);
     var user = new User({ name: "Joe", email: "joe@example.com", password: "secret" });
     user.save(function() {
         var jsonUser = user.toJSON();
         console.log(jsonUser);
-        // Outputs: { name: "Joe", email: "joe@example.com" }
     });
 
-In stead of `hide: true` you can specify the property to only be hidden for `toJSON` or `toObject` be writing: `hideJSON: true` or `hideObject` respectively.
+Outputs to the console the user without password: 
 
-Optionally you can use a `function` for `hide`, `hideJSON` or `hideObject`. The function has the following signature and must return `true` if the property should be filtered:
+    { name: "Joe", email: "joe@example.com" }
+
+In stead of `hide: true` you can specify the property to only be hidden for _toJSON()_ or _toObject()_ be writing: `hideJSON: true` or `hideObject` respectively.
+
+Optionally you can use a function object for `hide`, `hideJSON` and `hideObject`. The function has the following signature and must return `true` if the property should be hidden:
 
     function (doc, ret) {
         // return true to filter
     }
 
-The parameters `doc` and `ret` are passed in from the transform function. See `toJSON` and `toObject` in the Mongoose documentation.
+The parameters `doc` and `ret` are passed in from the transform function. See _toJSON()_ and _toObject()_ in the Mongoose documentation.
 
 ### Default Hidden
 
-By default `_id` and `__v` properties are hidden when calling either `toJSON` or `toObject`. You can override this behaviour, when you load the plugin:
+By default `_id` and `__v` properties are hidden automatically. You can override this behaviour, when you load the plugin:
 
     var mongooseHidden = require("mongoose-hidden")({ defaultHidden: { password: true } });
     UserSchema.plugin(mongooseHidden);
 
-By default `password` and only `password` will be hidden. You don't need to specify `hide: true` in the schema.
+Now only `password` will be hidden. _Note: You don't need to specify `hide: true` in the schema._
 
-To really make use of this feature, make sure to pass in your defaults in a variable like this:
+A more practical example is illustrated here passing the settings to your models:
 
-    // app.js
+    // file: app.js
     var modelConfig = { defaultHidden: { password: true } };
     require ('./models/user')(modelConfig);
 
-    // models/user.js
+
+    // file: models/user.js
     module.exports = function (config) {
         var mongooseHidden = require('mongoose-hidden')(config);
-
-        ... schema stuff ...
-
+        var schema = new Schema( ... schema stuff ... );
         schema.plugin(mongooseHidden);
-
         ... profit! ...
     };
 
@@ -90,9 +93,11 @@ Note: you can change the default behaviour for this `defaultHidden` properties b
 
     var mongooseHidden = require("mongoose-hidden")({ autoHideObject: false });
 
-What this does, is that when you invoke `toObject` the default hidden properties will no longer be exclude, but they will when invoking `toJSON`.
+What this does, is that when you invoke _toObject()_ the default hidden properties will no longer be exclude, but they will when invoking _toJSON()_.
 
-### Virtuals (since 0.3.1)
+### Virtuals 
+
+[since 0.3.1]
 
 Hiding of virtuals can be done as well.
 
@@ -104,9 +109,11 @@ Be sure to include the plugin after you turn on virtuals.
 
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`, but remember that if you don't turn on virtuals for `toObject`, `fullname` in the above example will NOT be hidden, even though it specifies that only JSON is hidden.
 
-## Transform (since 0.6)
+## Transform
 
-The plugin makes use of `toJSON` and `toObject`'s _transform-functionality_ to hide values. You can set a transform function prior to applying the plugin. The plugin will then invoke that function before hiding properties.
+[since 0.6]
+
+The plugin makes use of _toJSON()_ and _toObject()'s_ _transform-functionality_ to hide values. You can set a transform function prior to applying the plugin. The plugin will then invoke that function before hiding properties.
 
     var mongooseHidden = require("mongoose-hidden")({ defaultHidden: { password: true } });
 
