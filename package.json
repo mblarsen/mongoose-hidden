@@ -8,7 +8,9 @@
     "hidden",
     "hide",
     "property",
-    "schema"
+    "schema",
+    "password",
+    "id"
   ],
   "repository": {
     "type": "git",
