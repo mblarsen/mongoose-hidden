@@ -470,7 +470,7 @@ describe("mongoose-hidden", function () {
       userJson.niceEmail.should.equal('"Joe" <joe@example.com>');
       should.not.exist(userJson.password);
 
-      userObject = user.toObject();
+      var userObject = user.toObject();
       userObject.name.should.equal("Joe");
       userObject.email.should.equal("joe@example.com");
       should.not.exist(userObject['niceEmail']);
@@ -503,7 +503,7 @@ describe("mongoose-hidden", function () {
           User.findOne().populate('company').exec(function (err, freshUser) {
             should.exist(freshUser.company);
             freshUser.company.name.should.equal('GOGGLE');
-            userJson = freshUser.toJSON();
+            var userJson = freshUser.toJSON();
             should.not.exist(userJson.password);
             should.exist(userJson.company);
             should.equal("GOGGLE", userJson.company.name);
