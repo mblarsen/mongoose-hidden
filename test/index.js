@@ -572,4 +572,26 @@ describe("mongoose-hidden", function () {
       done();
     });
   });
+
+  describe("A model with custome transform on schematype", function () {
+    it("Should return transformed value", function (done) {
+      var User = defineModel({
+        name: {
+          type:String,
+          transform:function(value, schemaType){
+            return "GI " + value;
+          }
+        },
+        email: {
+          prefix: String,
+          suffix: String
+        },
+        password: String
+      });
+      var user = new User(testUser3);
+      var userJson = user.toObject();
+      userJson.name.should.equal("GI Joe");
+      done();
+    });
+  });
 });

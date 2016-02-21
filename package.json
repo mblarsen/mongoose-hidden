@@ -18,7 +18,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage",
+    "mocha": "./node_modules/mocha/bin/_mocha -R spec"
   },
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
