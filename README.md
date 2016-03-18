@@ -130,6 +130,10 @@ All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
 
+**0.6.2**
+
+Removed lodash dependency.
+
 **0.6.1**
 
 Fixes [Issue #3](https://github.com/mblarsen/mongoose-hidden/issues/3)
