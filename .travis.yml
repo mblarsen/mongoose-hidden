@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - "latest"
   - "5.9.0"
   - "4.1"
   - "0.11"
