@@ -16,7 +16,7 @@ First setup a schema and attach the plugin:
 
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
-        mongooseHidden = require('mongoose-hidden')(defaults);
+        mongooseHidden = require('mongoose-hidden')();
 
     var UserSchema = new Schema(
         name: String,
