@@ -101,8 +101,11 @@ What this does, is that when you invoke _toObject()_ the default hidden properti
 
 Hiding of virtuals can be done as well.
 
+    // By default in Mongoose virtuals will not be included. Turn on before enabling plugin.
     schema.set('toJSON', { virtuals: true });
     schema.set('toObject', { virtuals: true });
+
+    // Enable plugin
     schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
 
 Be sure to include the plugin after you turn on virtuals.
