@@ -6,6 +6,8 @@
 
 A Mongoose schema plugin that hooks into _toJSON()_ and _toObject()_ to allow hiding of properties you usually do not want to sent client-side.
 
+(Note: always check github for most up-to-date documentation)
+
 # Install
 
     npm install --save mongoose-hidden
