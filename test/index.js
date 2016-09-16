@@ -25,6 +25,7 @@ describe("mongoose-hidden", function () {
   };
 
   before(function (done) {
+    mongoose.Promise = require('bluebird');
     mongoose.connect('mongodb://localhost/mongoose-hidden', function(err) {
       if (err) {
         console.error('MongoDB: ' + err.message);
