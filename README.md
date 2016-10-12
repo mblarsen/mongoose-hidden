@@ -1,7 +1,7 @@
 # mongoose-hidden
 
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Dependencies](http://img.shields.io/david/mblarsen/mongoose-hidden.svg
-)](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)  
+)](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/mblarsen) [![Join the chat at https://gitter.im/mblarsen/mongoose-hidden](https://badges.gitter.im/mblarsen/mongoose-hidden.svg)](https://gitter.im/mblarsen/mongoose-hidden?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A Mongoose schema plugin that hooks into _toJSON()_ and _toObject()_ to allow hiding of properties you usually do not want to sent client-side.
@@ -37,7 +37,7 @@ Now let's create a model:
         console.log(jsonUser);
     });
 
-Outputs to the console the user without password: 
+Outputs to the console the user without password:
 
     { name: "Joe", email: "joe@example.com" }
 
@@ -65,7 +65,6 @@ A more practical example is illustrated here passing the settings to your models
     // file: app.js
     var modelConfig = { defaultHidden: { password: true } };
     require ('./models/user')(modelConfig);
-
 
     // file: models/user.js
     module.exports = function (config) {
@@ -97,7 +96,7 @@ Note: you can change the default behaviour for this `defaultHidden` properties b
 
 What this does, is that when you invoke _toObject()_ the default hidden properties will no longer be exclude, but they will when invoking _toJSON()_.
 
-### Virtuals 
+### Virtuals
 
 [since 0.3.1]
 
@@ -127,13 +126,17 @@ The plugin makes use of _toJSON()_ and _toObject()'s_ _transform-functionality_ 
         ret["name"] = "Mr " + ret["name"];
         return ret;
     }});
-    
+
     // Then apply plugin
     UserSchema.plugin(mongooseHidden);
-    
+
 All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
+
+**0.6.4**
+
+Limited dependency version range for `should`.
 
 **0.6.2**
 
@@ -145,8 +148,8 @@ Fixes [Issue #3](https://github.com/mblarsen/mongoose-hidden/issues/3)
 
 **0.6.0**
 
-New: If a `transform` has already been set before loading plugin that function will be applied before applying plugin tranforms. 
- 
+New: If a `transform` has already been set before loading plugin that function will be applied before applying plugin tranforms.
+
 Other: Reduced code size.
 
 **0.4.0**
@@ -167,11 +170,11 @@ Changed: `require("mongoose-hidden")` is now `require("mongoose-hidden")(default
 
 # Limitations
 
-* Always set `{ getters: true, virtuals: true }` before installing plugin:  
+* Always set `{ getters: true, virtuals: true }` before installing plugin:
 
     schema.set('toJSON', { getters: true, virtuals: true });
     schema.plugin(require(mongooseHidden));
-    
+
 * If there is a transform function defined already it will be overridden. Fix planned.
 * Recursive use of hide not supported.
 
