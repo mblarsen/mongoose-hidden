@@ -184,3 +184,8 @@ Changed: `require("mongoose-hidden")` is now `require("mongoose-hidden")(default
 - [ ] Implement turning on and off on a single invocation (if possible). Something like this:
 
     `var jsonUser = user.toJSON({ hide: false });`
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/mblarsen/mongoose-hidden/badge.svg?style=beer-square)](https://beerpay.io/mblarsen/mongoose-hidden)  [![Beerpay](https://beerpay.io/mblarsen/mongoose-hidden/make-wish.svg?style=flat-square)](https://beerpay.io/mblarsen/mongoose-hidden?focus=wish)
