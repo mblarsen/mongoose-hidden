@@ -4,6 +4,8 @@
 )](https://david-dm.org/mblarsen/mongoose-hidden) [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/mblarsen) [![Join the chat at https://gitter.im/mblarsen/mongoose-hidden](https://badges.gitter.im/mblarsen/mongoose-hidden.svg)](https://gitter.im/mblarsen/mongoose-hidden?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Beerpay](https://beerpay.io/mblarsen/mongoose-hidden/badge.svg?style=beer)](https://beerpay.io/mblarsen/mongoose-hidden) [![Beerpay](https://beerpay.io/mblarsen/mongoose-hidden/make-wish.svg?style=flat)](https://beerpay.io/mblarsen/mongoose-hidden)  
+
 A Mongoose schema plugin that hooks into _toJSON()_ and _toObject()_ to allow hiding of properties you usually do not want to sent client-side.
 
 (Note: always check github for most up-to-date documentation)
