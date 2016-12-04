@@ -177,12 +177,10 @@ Changed: `require("mongoose-hidden")` is now `require("mongoose-hidden")(default
     schema.set('toJSON', { getters: true, virtuals: true });
     schema.plugin(require(mongooseHidden));
 
-* If there is a transform function defined already it will be overridden. Fix planned.
 * Recursive use of hide not supported.
 
 # TODO
 
-- [x] ~~If there is a transform function defined on `toJSON` and `toObject` apply that first and then run the hide function.~~ _Implemented in v0.6_
 - [ ] Implement turning on and off on a single invocation (if possible). Something like this:
 
     `var jsonUser = user.toJSON({ hide: false });`
