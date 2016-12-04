@@ -98,6 +98,31 @@ Note: you can change the default behaviour for this `defaultHidden` properties b
 
 What this does, is that when you invoke _toObject()_ the default hidden properties will no longer be exclude, but they will when invoking _toJSON()_.
 
+### Hidden
+
+[since 0.7.0]
+
+The hidden option will add to the `defaultHidden`. 
+
+By default `_id` and `__v` properties are hidden automatically as seen above.
+The example shown (duplicated from above) sets `password` hidden, but now `_id`
+and `__v` are returned.
+
+    var mongooseHidden = require("mongoose-hidden")({ defaultHidden: { password: true } });
+    UserSchema.plugin(mongooseHidden);
+
+Using `hidden` allows you to keep whatever is the default and modify that setting:
+
+    var mongooseHidden = require("mongoose-hidden")(); // _id, __v hidden
+    UserSchema.plugin(mongooseHidden, { hidden: { _id: false, password: true } }); // adds, password and unhides _id
+
+or
+
+    var mongooseHidden = require("mongoose-hidden")({ hidden: { password: true } });
+    UserSchema.plugin(mongooseHidden, { hidden: { _id: false } });  // unhides _id, password is hidden
+
+    UnsecureUserSchema.plugin(mongooseHidden, { hidden: { password: false } });
+
 ### Virtuals
 
 [since 0.3.1]
@@ -135,6 +160,10 @@ The plugin makes use of _toJSON()_ and _toObject()'s_ _transform-functionality_ 
 All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
+
+**0.7.0**
+
+Add `hidden` option.
 
 **0.6.4**
 

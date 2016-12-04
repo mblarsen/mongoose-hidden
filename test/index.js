@@ -351,7 +351,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with password set as default hidden", function () {
-    it("Shouldn't return password", function (done) {
+    it("Shouldn't return password, but __v", function (done) {
       var UserSchema = new Schema({
         name: String,
         email: String,
@@ -363,6 +363,7 @@ describe("mongoose-hidden", function () {
       user.save(function () {
         var userJson = user.toJSON();
         userJson.name.should.equal("Joe");
+        user[keyVersion].should.exist
         userJson.email.should.equal("joe@example.com");
         should.not.exist(userJson["password"]);
         done();
@@ -385,6 +386,29 @@ describe("mongoose-hidden", function () {
         userJson.name.should.equal("Joe");
         userJson.email.should.equal("joe@example.com");
         userJson.password.should.equal(testPassword);
+        done();
+      });
+    });
+  });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/11
+  describe("A model with password set as hidden as option", function () {
+    it("Shouldn't return password nor __v", function (done) {
+      var UserSchema = new Schema({
+        name: String,
+        email: String,
+        password: String
+      });
+      UserSchema.plugin(require('../index')(), { hidden: { "password" : true }});
+      var User = mongoose.model('User', UserSchema, undefined, { cache: false });
+      var user = new User(testUser);
+      user.save(function () {
+        var userJson = user.toJSON();
+        userJson.name.should.equal("Joe");
+        user[keyVersion].should.exist
+        userJson.email.should.equal("joe@example.com");
+        should.not.exist(userJson["password"]);
+        should.not.exist(userJson[keyVersion]);
         done();
       });
     });
@@ -479,7 +503,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  // Ticket: https://github.com/mblarsen/mongoose-hidden/issues/1
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/1
   describe("A document with nested documents when hiding", function () {
     it("Shouldn't remove it's nested documents", function (done) {
       mongoose.modelSchemas = {};
@@ -555,7 +579,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  // Github issue: https://github.com/mblarsen/mongoose-hidden/issues/3
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/3
   describe("A model with other documents", function () {
     it("Should return the object property", function (done) {
       var User = defineModel({
