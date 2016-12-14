@@ -18,12 +18,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage",
+    "mocha": "./node_modules/mocha/bin/_mocha"
   },
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
   "dependencies": {
-    "debug": "^2.2.0",
+    "debug": "^2.4.1",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
@@ -31,6 +32,6 @@
     "istanbul": "^0.4.2",
     "mocha": "^3.0.2",
     "mongoose": "^4.3.7",
-    "should": "11.1.0"
+    "should": "^11.1.2"
   }
 }
