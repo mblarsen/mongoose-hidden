@@ -596,4 +596,68 @@ describe("mongoose-hidden", function () {
       done();
     });
   });
+  describe("A model with other documents partially hidden", function () {
+    it("Should return the object property", function (done) {
+      var User = defineModel({
+        name: String,
+        email: {
+          prefix: String,
+          suffix: String
+        },
+        password: String
+      }, { hidden: { 'email.suffix': true }});
+      var user = new User(testUser3);
+      var userJson = user.toObject();
+      var testUser3WithoutEmailSuffix = Object.assign({}, testUser3);
+      delete testUser3WithoutEmailSuffix.email.suffix;
+      userJson.should.deepEqual(testUser3WithoutEmailSuffix);
+      done();
+    });
+  });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/13
+  describe("A documents with non-schema properties set to hidden", function () {
+    it("Should hide the properties", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String
+      }, {
+        hidden: {
+          email: true
+        }
+      });
+      var user = new User(testUser);
+      user.save(function (err, savedUser) {
+        User.schema.remove('email');
+        var User2 = mongoose.model('User', User.schema, undefined, { cache: false });
+        User2.findById(savedUser['_id'], function (err, john) {
+          var userJson = john.toObject();
+          var testUserWithoutEmail = { name: testUser.name, password: testUser.password }
+          userJson.should.deepEqual(testUserWithoutEmail);
+          done();
+        })
+      })
+    });
+  });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
+  describe("A model with nested documents", function () {
+    it("should return only the visible parts", function (done) {
+      var User = defineModel({
+        name: String,
+        email: {
+          prefix: { type: String },
+          suffix: { type: String, hide: true }
+        },
+        password: String
+      });
+      var user = new User(testUser3);
+      var userJson = user.toObject();
+      var testUser3WithoutEmailSuffix = Object.assign({}, testUser3);
+      delete testUser3WithoutEmailSuffix.email.suffix;
+      userJson.should.deepEqual(testUser3WithoutEmailSuffix);
+      done();
+    });
+  });
 });

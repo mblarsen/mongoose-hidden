@@ -161,6 +161,10 @@ All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
 
+**0.8.0**
+
+Internal rewrite to make nested documents and non-schema-values work.
+
 **0.7.0**
 
 Add `hidden` option.
