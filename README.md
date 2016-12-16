@@ -160,6 +160,10 @@ All names will now be prefixed with "Mr" and passwords will be hidden of course.
 
 # Changes
 
+**0.9.0**
+
+Another internal rewrite to make the hide-logic more readable.
+
 **0.8.0**
 
 Internal rewrite to make nested documents and non-schema-values work.

@@ -62,7 +62,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with a hidden properties defined", function () {
-    it("Shouldn't return that property", function (done) {
+    it("shouldn't return those property", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -78,9 +78,8 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with default hidden properties defined", function () {
-    it("Shouldn't return __v property", function (done) {
+    it("shouldn't return __v property", function (done) {
       var User = defineModel({
-        keyVersion: String,
         name: String,
         email: String,
         password: { type: String, hide: true }
@@ -245,7 +244,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  describe("A model with a hidden properties defined using function", function () {
+  describe("A model with hidden properties defined using function", function () {
     it("Shouldn't return password property for Joe for both JSON and object", function (done) {
       var testFunction = function (doc, ret) {
         return doc.name === 'Joe';
