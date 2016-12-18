@@ -213,7 +213,8 @@ Changed: `require("mongoose-hidden")` is now `require("mongoose-hidden")(default
     schema.set('toJSON', { getters: true, virtuals: true });
     schema.plugin(require(mongooseHidden));
 
-* Recursive use of hide not supported.
+* Recursive use of hide not supported, but nested documents/objects are
+    supported.
 
 # TODO
 

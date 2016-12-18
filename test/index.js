@@ -1,7 +1,13 @@
+"use strict";
+
 var should = require('should'),
   mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  mongooseHidden = require('../index')(),
+  plugin = require('../index'),
+  mongooseHidden = plugin(),
+  getPath = plugin.__test.getPath,
+  setPath = plugin.__test.setPath,
+  deletePath = plugin.__test.deletePath,
   log = require('debug')('mongoose-hidden::test');
 
 describe("mongoose-hidden", function () {
@@ -659,4 +665,95 @@ describe("mongoose-hidden", function () {
       done();
     });
   });
+
+  describe("Getting path on an object", function () {
+    it("should return property", function () {
+      let obj = {
+        password: "secret",
+      }
+      getPath(obj, "password").should.equal("secret")
+    })
+    it("should return nested property", function () {
+      let obj = {
+        file: {
+          ext: "txt"
+        },
+        rights: {
+          inland: {
+            case: "A0003"
+          }
+        }
+      }
+      getPath(obj, "file.ext").should.equal("txt")
+      getPath(obj, "rights.inland.case").should.equal("A0003")
+    })
+    it("should return undefined for path that doesn't exist", function () {
+      let obj = {
+        file: {
+        },
+        a: { b: "not object" }
+      }
+      should.not.exist(getPath(obj, "password"))
+      should.not.exist(getPath(obj, "file.ext"))
+      should.not.exist(getPath(obj, "email.name"))
+      should.not.exist(getPath(obj, "a.b.c"))
+    })
+  })
+  describe("Setting a path on an object", function () {
+    it("should set plain property", function () {
+      let obj = {
+        password: "secret",
+      }
+      setPath(obj, "password", "no more secrets")
+      obj.password.should.equal("no more secrets")
+    })
+    it("should set plain property and create if it doesn't exist", function () {
+      let obj = {}
+      setPath(obj, "password", "no more secrets")
+      obj.password.should.equal("no more secrets")
+    })
+    it("should set nested property", function () {
+      let obj = {
+        name: {
+          first: "Joe"
+        }
+      }
+      setPath(obj, "name.first", "Jane")
+      obj.name.first.should.equal("Jane")
+      setPath(obj, "name.last", "Doe")
+      obj.name.last.should.equal("Doe")
+    })
+    it("should set nested property and create path if it doesn't exist", function () {
+      let obj = {
+      }
+      setPath(obj, "name.first", "Jane")
+      obj.name.first.should.equal("Jane")
+      setPath(obj, "rights.inland.case", "A0003")
+      obj.rights.inland.case.should.equal("A0003")
+      setPath(obj, "rights.outlandish.case", "A0004")
+      obj.rights.outlandish.case.should.equal("A0004")
+    })
+  })
+  describe("Deleting a path on an object", function () {
+    it("Should remove property", function () {
+      let obj = {
+        age: 42,
+        name: {
+          first: "Joe"
+        },
+        email: {
+          home: "abc",
+          work: "def"
+        }
+      }
+      deletePath(obj, "age")
+      should.not.exist(obj.age)
+      deletePath(obj, "name")
+      should.not.exist(obj.name)
+      deletePath(obj, "email.home")
+      should.exist(obj.email)
+      should.not.exist(obj.email.home)
+      should.exist(obj.email.work)
+    })
+  })
 });
