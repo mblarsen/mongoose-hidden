@@ -196,9 +196,9 @@ debug@2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.4.1.tgz#ef2532d2753d282045c13c82ce47a09e56b91d53"
+debug@2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.4.5.tgz#34c7b12a1ca96674428f41fe92c49b4ce7cd0607"
   dependencies:
     ms "0.7.2"
 
