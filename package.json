@@ -30,7 +30,7 @@
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "mocha": "^3.0.2",
-    "mongoose": "^4.3.7",
+    "mongoose": "^4.7.6",
     "should": "^11.1.2"
   }
 }
