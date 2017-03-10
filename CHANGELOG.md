@@ -1,5 +1,14 @@
 # Changelog
 
+1.1.0
+
+Rewrote to getPathnames to rely on schema tree rather than scheme path. This
+should be more reliable.
+
+1.0.0
+
+First release. API unlikely to change.
+
 **0.9.2-3**
 
 Bug-fixes and code improvements.
