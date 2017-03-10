@@ -453,7 +453,38 @@ describe("mongoose-hidden", function () {
       userJson.email.should.equal("joe@example.com");
       should.exist(userJson['niceEmail']);
       userJson.niceEmail.should.equal('"Joe" <joe@example.com>');
-      // should.not.exist(userJson['id']);
+      should.not.exist(userJson.password);
+      done();
+    });
+
+    // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
+    it("Should return and hide nested virtuals", function (done) {
+      var schema = new Schema({
+        name: { type: String, hidden: false },
+        email: String,
+        nice: {
+          bro: String,
+          baz: { aaa: String }
+        },
+        password: { type: String, hide: true }
+      });
+      schema.set('toJSON', { getters: true, virtuals: true });
+      schema.virtual('fancyEmail').get(function () { return '"' + this.name + '" <' + this.email + '>'; });
+      schema.virtual('nice.email').get(function () { return '"' + this.name + '" <' + this.email + '>'; });
+      schema.plugin(require('../index')(), {
+        virtuals: {
+          'nice.email': 'hideObject',
+        }
+      });
+      var User = mongoose.model('VirtualUser', schema);
+      var user = new User(Object.assign({nice: {bro:'foo'}}, testUser));
+      user.nice.email.should.equal('"Joe" <joe@example.com>');
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.exist(userJson.nice);
+      should.exist(userJson.nice.bro);
+      should.not.exist(userJson.nice.email);
       should.not.exist(userJson.password);
       done();
     });
