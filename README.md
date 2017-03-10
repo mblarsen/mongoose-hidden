@@ -35,7 +35,7 @@ A simple example the hides passwords:
     })
 
     user.save(function() {
-        console.log(user.toJSON())        // output { name: 'Joe', email: 'joe@example.com' }
+        console.log(user.toJSON()) // { name: 'Joe', email: 'joe@example.com' }
     })
 
 ### Property params: `hide`, `hideJSON`, `hideObject`
@@ -44,7 +44,7 @@ A property will be hidden in all cases when `toJSON` and `toObject` is invoked i
 
     let UserSchema = new Schema(
         ...
-        password: { type: String, hideJSON: true },       // hidden for toJSON but not for toObject
+        password: { type: String, hideJSON: true }, // hidden for toJSON but not for toObject
         ...
     )
 
@@ -111,6 +111,8 @@ Hiding of virtuals can be done as well. Be sure to include the plugin after you 
     schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
 
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`.
+
+If have nested virtuals use the path for the key above, e.g. `'nested.virtual': 'hideJSON'`.
 
 _Note: If you don't turn on virtuals for `toObject`, `fullname` in the above example `fullname` will *NOT* be hidden despite its `hideJSON` value._
 
