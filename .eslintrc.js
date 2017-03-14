@@ -1,7 +1,8 @@
 module.exports = {
     "env": {
         "browser": false,
-        "es6": true
+        "es6": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -92,7 +93,7 @@ module.exports = {
         "lines-around-directive": "error",
         "max-depth": "error",
         "max-len": "off",
-        "max-lines": "error",
+        "max-lines": "off",
         "max-nested-callbacks": "error",
         "max-params": "off",
         "max-statements": "off",
