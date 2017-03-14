@@ -6,3 +6,4 @@ node_js:
   - 5.9.0
   - '4.1'
 services: mongodb
+script: travis_retry npm run test
