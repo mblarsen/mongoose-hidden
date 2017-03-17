@@ -15,6 +15,7 @@ describe("mongoose-hidden", function () {
   var testUser2    = { name: "Marie", email: "marie@example.com", password: "secret" };
   var testUser3    = { name: "Joe", email: { prefix: 'joe', suffix: 'example.com' }, password: "secret" };
   var testCompany  = { "_id": "5613a1c7e1095d8e71ae90da", "name": "GOGGLE", "code": "GOG" };
+  var testCompany2 = { "_id": "5613a1c7e1095d8e71ae90db", "name": "APPLE", "code": "APL" };
   var testPassword = "secret";
   var keyVersion   = "__v";
   var keyId        = "_id";
@@ -568,6 +569,47 @@ describe("mongoose-hidden", function () {
             should.exist(userJson.company);
             should.equal("GOGGLE", userJson.company.name);
             done();
+          });
+        });
+      });
+    });
+  });
+
+  describe("A document with a collection of nested documents", function () {
+    it("Shouldn't remove it's nested documents", function (done) {
+      mongoose.modelSchemas = {};
+      mongoose.models = {};
+      var Company = defineModel("Company", {
+        name: String,
+        code: String,
+      }, { hideObject: false}, {});
+      var User = defineModel("User", {
+        name: String,
+        email: String,
+        companies: [{ type: Schema.ObjectId, ref: 'Company' }],
+        password: { type: String, hide: true }
+      });
+
+      var company = new Company(testCompany);
+      var company2 = new Company(testCompany2);
+      var user = new User(testUser);
+      company.save(function(err, freshCompany) {
+        company2.save(function(err, freshCompany2) {
+          user.companies.push(company);
+          user.companies.push(company2);
+          user.save(function() {
+            User.findOne().populate('companies').exec(function (err, freshUser) {
+              should.exist(freshUser.companies);
+              freshUser.companies[0].name.should.equal('GOGGLE');
+              freshUser.companies[1].name.should.equal('APPLE');
+              var userJson = freshUser.toJSON();
+              console.log(JSON.stringify(userJson))
+              should.not.exist(userJson.password);
+              should.exist(userJson.companies);
+              should.equal("GOGGLE", userJson.companies[0].name);
+              should.equal("APPLE", userJson.companies[1].name);
+              done();
+            });
           });
         });
       });
