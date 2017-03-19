@@ -603,7 +603,6 @@ describe("mongoose-hidden", function () {
               freshUser.companies[0].name.should.equal('GOGGLE');
               freshUser.companies[1].name.should.equal('APPLE');
               var userJson = freshUser.toJSON();
-              console.log(JSON.stringify(userJson))
               should.not.exist(userJson.password);
               should.exist(userJson.companies);
               should.equal("GOGGLE", userJson.companies[0].name);
