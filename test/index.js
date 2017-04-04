@@ -12,6 +12,8 @@ var should = require('should'),
 
 describe("mongoose-hidden", function () {
   var testUser     = { name: "Joe", email: "joe@example.com", password: "secret" };
+  var testUserSub     = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries" } };
+  var testUserSub2     = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries", age:37 } };
   var testUser2    = { name: "Marie", email: "marie@example.com", password: "secret" };
   var testUser3    = { name: "Joe", email: { prefix: 'joe', suffix: 'example.com' }, password: "secret" };
   var testCompany  = { "_id": "5613a1c7e1095d8e71ae90da", "name": "GOGGLE", "code": "GOG" };
@@ -828,4 +830,45 @@ describe("mongoose-hidden", function () {
       should.exist(obj.email.work)
     })
   })
+
+  //Sub Schema @see http://mongoosejs.com/docs/subdocs.html 
+  //Single Embedded Subdocs Section
+  describe.only("Model with Single Embedded Subdoc",function () {
+
+    //Fix TypeError: Cannot read property 'type' of null 
+    //at Object.keys.reduce (lib/mongoose-hidden.js:124:56)
+    
+     it("Should return all properties", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name:{ type:String }})
+      });
+      var user = new User(testUserSub);
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      userJson.password.should.equal(testPassword);
+      userJson.spouse.name.should.equal(testUserSub.spouse.name);
+      done();
+    });
+
+    it("shouldn't return those property", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name:{ type:String, hide:true }, age: {type:Number } })
+      });
+      var user = new User(testUserSub2);
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.not.exist(userJson.spouse.name);
+      done();
+    });
+
+  });
+
 });
