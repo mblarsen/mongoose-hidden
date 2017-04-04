@@ -1,14 +1,23 @@
+"use strict";
+
 var should = require('should'),
   mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  mongooseHidden = require('../index')(),
+  plugin = require('../index'),
+  mongooseHidden = plugin(),
+  getPath = plugin.__test.getPath,
+  setPath = plugin.__test.setPath,
+  deletePath = plugin.__test.deletePath,
   log = require('debug')('mongoose-hidden::test');
 
 describe("mongoose-hidden", function () {
   var testUser     = { name: "Joe", email: "joe@example.com", password: "secret" };
+  var testUserSub     = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries" } };
+  var testUserSub2     = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries", age:37 } };
   var testUser2    = { name: "Marie", email: "marie@example.com", password: "secret" };
   var testUser3    = { name: "Joe", email: { prefix: 'joe', suffix: 'example.com' }, password: "secret" };
   var testCompany  = { "_id": "5613a1c7e1095d8e71ae90da", "name": "GOGGLE", "code": "GOG" };
+  var testCompany2 = { "_id": "5613a1c7e1095d8e71ae90db", "name": "APPLE", "code": "APL" };
   var testPassword = "secret";
   var keyVersion   = "__v";
   var keyId        = "_id";
@@ -62,7 +71,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with a hidden properties defined", function () {
-    it("Shouldn't return that property", function (done) {
+    it("shouldn't return those property", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -78,9 +87,8 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with default hidden properties defined", function () {
-    it("Shouldn't return __v property", function (done) {
+    it("shouldn't return __v property", function (done) {
       var User = defineModel({
-        keyVersion: String,
         name: String,
         email: String,
         password: { type: String, hide: true }
@@ -245,7 +253,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  describe("A model with a hidden properties defined using function", function () {
+  describe("A model with hidden properties defined using function", function () {
     it("Shouldn't return password property for Joe for both JSON and object", function (done) {
       var testFunction = function (doc, ret) {
         return doc.name === 'Joe';
@@ -351,7 +359,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with password set as default hidden", function () {
-    it("Shouldn't return password", function (done) {
+    it("Shouldn't return password, but __v", function (done) {
       var UserSchema = new Schema({
         name: String,
         email: String,
@@ -363,6 +371,7 @@ describe("mongoose-hidden", function () {
       user.save(function () {
         var userJson = user.toJSON();
         userJson.name.should.equal("Joe");
+        user[keyVersion].should.exist
         userJson.email.should.equal("joe@example.com");
         should.not.exist(userJson["password"]);
         done();
@@ -385,6 +394,29 @@ describe("mongoose-hidden", function () {
         userJson.name.should.equal("Joe");
         userJson.email.should.equal("joe@example.com");
         userJson.password.should.equal(testPassword);
+        done();
+      });
+    });
+  });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/11
+  describe("A model with password set as hidden as option", function () {
+    it("Shouldn't return password nor __v", function (done) {
+      var UserSchema = new Schema({
+        name: String,
+        email: String,
+        password: String
+      });
+      UserSchema.plugin(require('../index')(), { hidden: { "password" : true }});
+      var User = mongoose.model('User', UserSchema, undefined, { cache: false });
+      var user = new User(testUser);
+      user.save(function () {
+        var userJson = user.toJSON();
+        userJson.name.should.equal("Joe");
+        user[keyVersion].should.exist
+        userJson.email.should.equal("joe@example.com");
+        should.not.exist(userJson["password"]);
+        should.not.exist(userJson[keyVersion]);
         done();
       });
     });
@@ -424,7 +456,38 @@ describe("mongoose-hidden", function () {
       userJson.email.should.equal("joe@example.com");
       should.exist(userJson['niceEmail']);
       userJson.niceEmail.should.equal('"Joe" <joe@example.com>');
-      // should.not.exist(userJson['id']);
+      should.not.exist(userJson.password);
+      done();
+    });
+
+    // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
+    it("Should return and hide nested virtuals", function (done) {
+      var schema = new Schema({
+        name: { type: String, hidden: false },
+        email: String,
+        nice: {
+          bro: String,
+          baz: { aaa: String }
+        },
+        password: { type: String, hide: true }
+      });
+      schema.set('toJSON', { getters: true, virtuals: true });
+      schema.virtual('fancyEmail').get(function () { return '"' + this.name + '" <' + this.email + '>'; });
+      schema.virtual('nice.email').get(function () { return '"' + this.name + '" <' + this.email + '>'; });
+      schema.plugin(require('../index')(), {
+        virtuals: {
+          'nice.email': 'hideObject',
+        }
+      });
+      var User = mongoose.model('VirtualUser', schema);
+      var user = new User(Object.assign({nice: {bro:'foo'}}, testUser));
+      user.nice.email.should.equal('"Joe" <joe@example.com>');
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.exist(userJson.nice);
+      should.exist(userJson.nice.bro);
+      should.not.exist(userJson.nice.email);
       should.not.exist(userJson.password);
       done();
     });
@@ -479,7 +542,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  // Ticket: https://github.com/mblarsen/mongoose-hidden/issues/1
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/1
   describe("A document with nested documents when hiding", function () {
     it("Shouldn't remove it's nested documents", function (done) {
       mongoose.modelSchemas = {};
@@ -508,6 +571,46 @@ describe("mongoose-hidden", function () {
             should.exist(userJson.company);
             should.equal("GOGGLE", userJson.company.name);
             done();
+          });
+        });
+      });
+    });
+  });
+
+  describe("A document with a collection of nested documents", function () {
+    it("Shouldn't remove it's nested documents", function (done) {
+      mongoose.modelSchemas = {};
+      mongoose.models = {};
+      var Company = defineModel("Company", {
+        name: String,
+        code: String,
+      }, { hideObject: false}, {});
+      var User = defineModel("User", {
+        name: String,
+        email: String,
+        companies: [{ type: Schema.ObjectId, ref: 'Company' }],
+        password: { type: String, hide: true }
+      });
+
+      var company = new Company(testCompany);
+      var company2 = new Company(testCompany2);
+      var user = new User(testUser);
+      company.save(function(err, freshCompany) {
+        company2.save(function(err, freshCompany2) {
+          user.companies.push(company);
+          user.companies.push(company2);
+          user.save(function() {
+            User.findOne().populate('companies').exec(function (err, freshUser) {
+              should.exist(freshUser.companies);
+              freshUser.companies[0].name.should.equal('GOGGLE');
+              freshUser.companies[1].name.should.equal('APPLE');
+              var userJson = freshUser.toJSON();
+              should.not.exist(userJson.password);
+              should.exist(userJson.companies);
+              should.equal("GOGGLE", userJson.companies[0].name);
+              should.equal("APPLE", userJson.companies[1].name);
+              done();
+            });
           });
         });
       });
@@ -555,7 +658,7 @@ describe("mongoose-hidden", function () {
     });
   });
 
-  // Github issue: https://github.com/mblarsen/mongoose-hidden/issues/3
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/3
   describe("A model with other documents", function () {
     it("Should return the object property", function (done) {
       var User = defineModel({
@@ -572,26 +675,200 @@ describe("mongoose-hidden", function () {
       done();
     });
   });
-
-  describe("A model with custome transform on schematype", function () {
-    it("Should return transformed value", function (done) {
+  describe("A model with other documents partially hidden", function () {
+    it("Should return the object property", function (done) {
       var User = defineModel({
-        name: {
-          type:String,
-          transform:function(value, schemaType){
-            return "GI " + value;
-          }
-        },
+        name: String,
         email: {
           prefix: String,
           suffix: String
         },
         password: String
-      });
+      }, { hidden: { 'email.suffix': true }});
       var user = new User(testUser3);
       var userJson = user.toObject();
-      userJson.name.should.equal("GI Joe");
+      var testUser3WithoutEmailSuffix = Object.assign({}, testUser3);
+      delete testUser3WithoutEmailSuffix.email.suffix;
+      userJson.should.deepEqual(testUser3WithoutEmailSuffix);
       done();
     });
   });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/13
+  describe("A documents with non-schema properties set to hidden", function () {
+    it("Should hide the properties", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String
+      }, {
+        hidden: {
+          email: true
+        }
+      });
+      var user = new User(testUser);
+      user.save(function (err, savedUser) {
+        User.schema.remove('email');
+        var User2 = mongoose.model('User', User.schema, undefined, { cache: false });
+        User2.findById(savedUser['_id'], function (err, john) {
+          var userJson = john.toObject();
+          var testUserWithoutEmail = { name: testUser.name, password: testUser.password }
+          userJson.should.deepEqual(testUserWithoutEmail);
+          done();
+        })
+      })
+    });
+  });
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
+  describe("A model with nested documents", function () {
+    it("should return only the visible parts", function (done) {
+      var User = defineModel({
+        name: String,
+        email: {
+          prefix: { type: String },
+          suffix: { type: String, hide: true }
+        },
+        password: String
+      });
+      var user = new User(testUser3);
+      var userJson = user.toObject();
+      var testUser3WithoutEmailSuffix = Object.assign({}, testUser3);
+      delete testUser3WithoutEmailSuffix.email.suffix;
+      userJson.should.deepEqual(testUser3WithoutEmailSuffix);
+      done();
+    });
+  });
+
+  describe("Getting path on an object", function () {
+    it("should return property", function () {
+      let obj = {
+        password: "secret",
+      }
+      getPath(obj, "password").should.equal("secret")
+    })
+    it("should return nested property", function () {
+      let obj = {
+        file: {
+          ext: "txt"
+        },
+        rights: {
+          inland: {
+            case: "A0003"
+          }
+        }
+      }
+      getPath(obj, "file.ext").should.equal("txt")
+      getPath(obj, "rights.inland.case").should.equal("A0003")
+    })
+    it("should return undefined for path that doesn't exist", function () {
+      let obj = {
+        file: {
+        },
+        a: { b: "not object" }
+      }
+      should.not.exist(getPath(obj, "password"))
+      should.not.exist(getPath(obj, "file.ext"))
+      should.not.exist(getPath(obj, "email.name"))
+      should.not.exist(getPath(obj, "a.b.c"))
+    })
+  })
+  describe("Setting a path on an object", function () {
+    it("should set plain property", function () {
+      let obj = {
+        password: "secret",
+      }
+      setPath(obj, "password", "no more secrets")
+      obj.password.should.equal("no more secrets")
+    })
+    it("should set plain property and create if it doesn't exist", function () {
+      let obj = {}
+      setPath(obj, "password", "no more secrets")
+      obj.password.should.equal("no more secrets")
+    })
+    it("should set nested property", function () {
+      let obj = {
+        name: {
+          first: "Joe"
+        }
+      }
+      setPath(obj, "name.first", "Jane")
+      obj.name.first.should.equal("Jane")
+      setPath(obj, "name.last", "Doe")
+      obj.name.last.should.equal("Doe")
+    })
+    it("should set nested property and create path if it doesn't exist", function () {
+      let obj = {
+      }
+      setPath(obj, "name.first", "Jane")
+      obj.name.first.should.equal("Jane")
+      setPath(obj, "rights.inland.case", "A0003")
+      obj.rights.inland.case.should.equal("A0003")
+      setPath(obj, "rights.outlandish.case", "A0004")
+      obj.rights.outlandish.case.should.equal("A0004")
+    })
+  })
+  describe("Deleting a path on an object", function () {
+    it("Should remove property", function () {
+      let obj = {
+        age: 42,
+        name: {
+          first: "Joe"
+        },
+        email: {
+          home: "abc",
+          work: "def"
+        }
+      }
+      deletePath(obj, "age")
+      should.not.exist(obj.age)
+      deletePath(obj, "name")
+      should.not.exist(obj.name)
+      deletePath(obj, "email.home")
+      should.exist(obj.email)
+      should.not.exist(obj.email.home)
+      should.exist(obj.email.work)
+    })
+  })
+
+  //Sub Schema @see http://mongoosejs.com/docs/subdocs.html 
+  //Single Embedded Subdocs Section
+  describe.only("Model with Single Embedded Subdoc",function () {
+
+    //Fix TypeError: Cannot read property 'type' of null 
+    //at Object.keys.reduce (lib/mongoose-hidden.js:124:56)
+    
+     it("Should return all properties", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name:{ type:String }})
+      });
+      var user = new User(testUserSub);
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      userJson.password.should.equal(testPassword);
+      userJson.spouse.name.should.equal(testUserSub.spouse.name);
+      done();
+    });
+
+    it("shouldn't return those property", function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name:{ type:String, hide:true }, age: {type:Number } })
+      });
+      var user = new User(testUserSub2);
+      var userJson = user.toJSON();
+      userJson.name.should.equal("Joe");
+      userJson.email.should.equal("joe@example.com");
+      should.not.exist(userJson.spouse.name);
+      done();
+    });
+
+  });
+
 });

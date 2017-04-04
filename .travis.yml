@@ -1,8 +1,9 @@
 language: node_js
 node_js:
-  - "4.1"
-  - "4.0"
-  - "0.12"
-  - "0.11"
-  - "0.10"
+  - 7.2.0
+  - 7.0.0
+  - 6.5.0
+  - 5.9.0
+  - '4.1'
 services: mongodb
+script: travis_retry npm run test

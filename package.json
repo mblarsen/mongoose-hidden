@@ -1,37 +1,36 @@
 {
-  "name": "mongoose-hidden",
-  "version": "0.6.1",
-  "author": "Michael Bøcker-Larsen <mblarsen@gmail.com>",
-  "description": "Hides certain model properties when invoking toJSON or toObject.",
-  "keywords": [
-    "mongoose",
-    "hidden",
-    "hide",
-    "property",
-    "schema",
-    "password",
-    "id"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mblarsen/mongoose-hidden.git"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage",
-    "mocha": "./node_modules/mocha/bin/_mocha -R spec"
-  },
-  "license": "MIT",
-  "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
-  "dependencies": {
-    "debug": "^2.2.0",
-    "lodash": "^4.1.0"
-  },
-  "devDependencies": {
-    "coveralls": "^2.11.6",
-    "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "mongoose": "^4.3.7",
-    "should": "^8.2.1"
-  }
+    "name": "mongoose-hidden",
+    "version": "1.2.0",
+    "author": "Michael Bøcker-Larsen <mblarsen@gmail.com>",
+    "description": "Hides certain model properties when invoking toJSON or toObject.",
+    "keywords": [
+        "mongoose",
+        "hidden",
+        "hide",
+        "property",
+        "schema",
+        "password",
+        "id"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mblarsen/mongoose-hidden.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage",
+        "mocha": "./node_modules/mocha/bin/_mocha"
+    },
+    "license": "MIT",
+    "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
+    "dependencies": {
+        "debug": "^2.6"
+    },
+    "devDependencies": {
+        "coveralls": "^2.11.6",
+        "istanbul": "^0.4.2",
+        "mocha": "^3.0.2",
+        "mongoose": "^4.7.8",
+        "should": "^11.1.2"
+    }
 }
