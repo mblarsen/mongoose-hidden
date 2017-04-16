@@ -4,14 +4,12 @@ const should = require('should')
 const mongoose = require('mongoose')
 const plugin = require('../index')
 
-const { Schema } = mongoose
+const Schema = mongoose.Schema
 const mongooseHidden = plugin()
 
-const {
-  getPath,
-  setPath,
-  deletePath
-} = plugin.__test
+const getPath = plugin.__test.getPath
+const setPath = plugin.__test.setPath
+const deletePath = plugin.__test.deletePath
 
 describe("mongoose-hidden", function () {
   let testUser = { name: "Joe", email: "joe@example.com", password: "secret" }
@@ -126,9 +124,7 @@ describe("mongoose-hidden", function () {
           type: String,
           hide: true
         }
-      }, {
-        hide: false
-      })
+      }, { hide: false })
       let user = new User(testUser)
       user.save(function () {
         let userJson = user.toJSON()
@@ -151,9 +147,7 @@ describe("mongoose-hidden", function () {
           type: String,
           hide: true
         }
-      }, {
-        hideJSON: false
-      })
+      }, { hideJSON: false })
 
       let user = new User(testUser)
       user.save(function () {
@@ -184,9 +178,7 @@ describe("mongoose-hidden", function () {
           type: String,
           hide: true
         }
-      }, {
-        hideObject: false
-      })
+      }, { hideObject: false })
 
       let user = new User(testUser)
       user.save(function () {
@@ -270,7 +262,7 @@ describe("mongoose-hidden", function () {
         password: {
           type: String,
           hideObject: false
-        } // basically has no effect unless `true`
+        }
       })
 
       let user = new User(testUser)
@@ -335,7 +327,7 @@ describe("mongoose-hidden", function () {
     function () {
       it("shouldn't return password property for Joe for only for JSON",
         function (done) {
-          let testFunction = function (doc, ret) {
+          let testFunction = function (doc) {
             return doc.name === 'Joe'
           }
           let User = defineModel({
@@ -376,7 +368,7 @@ describe("mongoose-hidden", function () {
     function () {
       it("shouldn't return password property for Joe for only for object",
         function (done) {
-          let testFunction = function (doc, ret) {
+          let testFunction = function (doc) {
             return doc.name === 'Joe'
           }
           let User = defineModel({
@@ -419,19 +411,13 @@ describe("mongoose-hidden", function () {
         email: String,
         password: String
       })
-      UserSchema.plugin(require('../index')({
-        defaultHidden: {
-          "password": true
-        }
-      }))
-      let User = mongoose.model('User', UserSchema, undefined, {
-        cache: false
-      })
+      UserSchema.plugin(plugin({ defaultHidden: { "password": true } }))
+      let User = mongoose.model('User', UserSchema, undefined, { cache: false })
       let user = new User(testUser)
       user.save(function () {
         let userJson = user.toJSON()
         userJson.name.should.equal("Joe")
-        user[keyVersion].should.exist
+        user[keyVersion].should.exist // eslint-disable-line
         userJson.email.should.equal("joe@example.com")
         should.not.exist(userJson["password"])
         done()
@@ -475,7 +461,7 @@ describe("mongoose-hidden", function () {
       user.save(function () {
         let userJson = user.toJSON()
         userJson.name.should.equal("Joe")
-        user[keyVersion].should.exist
+        user[keyVersion].should.exist // eslint-disable-line
         userJson.email.should.equal("joe@example.com")
         should.not.exist(userJson["password"])
         should.not.exist(userJson[keyVersion])
