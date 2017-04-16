@@ -1,32 +1,33 @@
 "use strict";
 
-var should = require('should'),
-  mongoose = require('mongoose'),
-  Schema = mongoose.Schema,
-  plugin = require('../index'),
-  mongooseHidden = plugin(),
-  getPath = plugin.__test.getPath,
-  setPath = plugin.__test.setPath,
-  deletePath = plugin.__test.deletePath,
-  log = require('debug')('mongoose-hidden::test');
+const should = require('should');
+const mongoose = require('mongoose');
+const plugin = require('../index');
+
+const { Schema } = mongoose
+const mongooseHidden = plugin()
+
+const { getPath, setPath, deletePath } = plugin.__test
 
 describe("mongoose-hidden", function () {
-  var testUser     = { name: "Joe", email: "joe@example.com", password: "secret" };
-  var testUser2    = { name: "Marie", email: "marie@example.com", password: "secret" };
-  var testUser3    = { name: "Joe", email: { prefix: 'joe', suffix: 'example.com' }, password: "secret" };
-  var testCompany  = { "_id": "5613a1c7e1095d8e71ae90da", "name": "GOGGLE", "code": "GOG" };
-  var testCompany2 = { "_id": "5613a1c7e1095d8e71ae90db", "name": "APPLE", "code": "APL" };
-  var testPassword = "secret";
-  var keyVersion   = "__v";
-  var keyId        = "_id";
+  let testUser     = { name: "Joe", email: "joe@example.com", password: "secret" };
+  let testUserSub  = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries" } };
+  let testUserSub2 = { name: "Joe", email: "joe@example.com", password: "secret", spouse:{ name: "Maries", age:37 } };
+  let testUser2    = { name: "Marie", email: "marie@example.com", password: "secret" };
+  let testUser3    = { name: "Joe", email: { prefix: 'joe', suffix: 'example.com' }, password: "secret" };
+  let testCompany  = { "_id": "5613a1c7e1095d8e71ae90da", "name": "GOGGLE", "code": "GOG" };
+  let testCompany2 = { "_id": "5613a1c7e1095d8e71ae90db", "name": "APPLE", "code": "APL" };
+  let testPassword = "secret";
+  let keyVersion   = "__v";
+  let keyId        = "_id";
 
-  var defineModel = function (name, schemaProperties, pluginOptions) {
+  let defineModel = function (name, schemaProperties, pluginOptions) {
     if ("object" == typeof name) {
       pluginOptions = schemaProperties;
       schemaProperties = name;
       name = "User";
     }
-    var schema = schemaProperties instanceof Schema ? schemaProperties : new Schema(schemaProperties);
+    let schema = schemaProperties instanceof Schema ? schemaProperties : new Schema(schemaProperties);
     schema.plugin(mongooseHidden, pluginOptions || {});
     return mongoose.model(name, schema, undefined);
   };
@@ -53,7 +54,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with no hidden properties defined", function () {
-    it("Should return all properties", function (done) {
+    it("should return all properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -104,7 +105,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding turned off", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -124,7 +125,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding turned off for JSON only", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -152,7 +153,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding turned off for object only", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -180,7 +181,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding on, JSON option property", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -204,7 +205,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding on, object option property", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -228,7 +229,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("Default hiding on, object option property off", function () {
-    it("Shouldn't hide any properties", function (done) {
+    it("shouldn't hide any properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -252,7 +253,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with hidden properties defined using function", function () {
-    it("Shouldn't return password property for Joe for both JSON and object", function (done) {
+    it("shouldn't return password property for Joe for both JSON and object", function (done) {
       var testFunction = function (doc, ret) {
         return doc.name === 'Joe';
       }
@@ -287,7 +288,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with a hidden properties defined using function for JSON", function () {
-    it("Shouldn't return password property for Joe for only for JSON", function (done) {
+    it("shouldn't return password property for Joe for only for JSON", function (done) {
       var testFunction = function (doc, ret) {
         return doc.name === 'Joe';
       }
@@ -322,7 +323,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with a hidden properties defined using function for object", function () {
-    it("Shouldn't return password property for Joe for only for object", function (done) {
+    it("shouldn't return password property for Joe for only for object", function (done) {
       var testFunction = function (doc, ret) {
         return doc.name === 'Joe';
       }
@@ -357,7 +358,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with password set as default hidden", function () {
-    it("Shouldn't return password, but __v", function (done) {
+    it("shouldn't return password, but __v", function (done) {
       var UserSchema = new Schema({
         name: String,
         email: String,
@@ -378,7 +379,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with password and password set as default hidden overriden with option", function () {
-    it("Should return password", function (done) {
+    it("should return password", function (done) {
       var UserSchema = new Schema({
         name: String,
         email: String,
@@ -399,7 +400,7 @@ describe("mongoose-hidden", function () {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/11
   describe("A model with password set as hidden as option", function () {
-    it("Shouldn't return password nor __v", function (done) {
+    it("shouldn't return password nor __v", function (done) {
       var UserSchema = new Schema({
         name: String,
         email: String,
@@ -421,7 +422,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A model with a virtuals defined", function () {
-    it("Shouldn't return that property if option not passed", function (done) {
+    it("shouldn't return that property if option not passed", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -437,7 +438,7 @@ describe("mongoose-hidden", function () {
       done();
     });
 
-    it("Should return that property if option is passed", function (done) {
+    it("should return that property if option is passed", function (done) {
       var schema = new Schema({
         name: String,
         email: String,
@@ -459,7 +460,7 @@ describe("mongoose-hidden", function () {
     });
 
     // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
-    it("Should return and hide nested virtuals", function (done) {
+    it("should return and hide nested virtuals", function (done) {
       var schema = new Schema({
         name: { type: String, hidden: false },
         email: String,
@@ -490,7 +491,7 @@ describe("mongoose-hidden", function () {
       done();
     });
 
-    it("Shouldn't return that property even if option is passed", function (done) {
+    it("shouldn't return that property even if option is passed", function (done) {
       var schema = new Schema({
         name: String,
         email: String,
@@ -511,7 +512,7 @@ describe("mongoose-hidden", function () {
       done();
     });
 
-    it("Shouldn't return that property even if option is passed, unless object", function (done) {
+    it("shouldn't return that property even if option is passed, unless object", function (done) {
       var schema = new Schema({
         name: String,
         email: String,
@@ -542,7 +543,7 @@ describe("mongoose-hidden", function () {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/1
   describe("A document with nested documents when hiding", function () {
-    it("Shouldn't remove it's nested documents", function (done) {
+    it("shouldn't remove it's nested documents", function (done) {
       mongoose.modelSchemas = {};
       mongoose.models = {};
       var Company = defineModel("Company", {
@@ -576,7 +577,7 @@ describe("mongoose-hidden", function () {
   });
 
   describe("A document with a collection of nested documents", function () {
-    it("Shouldn't remove it's nested documents", function (done) {
+    it("shouldn't remove it's nested documents", function (done) {
       mongoose.modelSchemas = {};
       mongoose.models = {};
       var Company = defineModel("Company", {
@@ -658,7 +659,7 @@ describe("mongoose-hidden", function () {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/3
   describe("A model with other documents", function () {
-    it("Should return the object property", function (done) {
+    it("should return the object property", function (done) {
       var User = defineModel({
         name: String,
         email: {
@@ -674,7 +675,7 @@ describe("mongoose-hidden", function () {
     });
   });
   describe("A model with other documents partially hidden", function () {
-    it("Should return the object property", function (done) {
+    it("should return the object property", function (done) {
       var User = defineModel({
         name: String,
         email: {
@@ -694,7 +695,7 @@ describe("mongoose-hidden", function () {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/13
   describe("A documents with non-schema properties set to hidden", function () {
-    it("Should hide the properties", function (done) {
+    it("should hide the properties", function (done) {
       var User = defineModel({
         name: String,
         email: String,
@@ -807,7 +808,7 @@ describe("mongoose-hidden", function () {
     })
   })
   describe("Deleting a path on an object", function () {
-    it("Should remove property", function () {
+    it("should remove property", function () {
       let obj = {
         age: 42,
         name: {
@@ -828,4 +829,37 @@ describe("mongoose-hidden", function () {
       should.exist(obj.email.work)
     })
   })
+
+  describe('Model with embedded schema', function () {
+     it('should return all properties', function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name: { type: String }})
+      });
+      var user = new User(testUserSub);
+      var userJson = user.toJSON();
+      userJson.name.should.equal('Joe');
+      userJson.email.should.equal('joe@example.com');
+      userJson.password.should.equal(testPassword);
+      userJson.spouse.name.should.equal(testUserSub.spouse.name);
+      done();
+    });
+
+    it('shouldn\'t return those property', function (done) {
+      var User = defineModel({
+        name: String,
+        email: String,
+        password: String,
+        spouse: new Schema({ name:{ type:String, hide:true }, age: {type:Number } })
+      });
+      var user = new User(testUserSub2);
+      var userJson = user.toJSON();
+      userJson.name.should.equal('Joe');
+      userJson.email.should.equal('joe@example.com');
+      should.not.exist(userJson.spouse.name);
+      done();
+    });
+  });
 });
