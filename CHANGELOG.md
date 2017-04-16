@@ -1,5 +1,13 @@
 # Changelog
 
+1.3.0
+
+New: Nested document can be a Schema (thanks to @lykmapipo)
+
+1.2.0
+
+Fixed regressions and added linting
+
 1.1.0
 
 Rewrote to getPathnames to rely on schema tree rather than scheme path. This
