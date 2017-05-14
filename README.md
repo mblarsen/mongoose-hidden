@@ -1,5 +1,7 @@
 # mongoose-hidden
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mblarsen/mongoose-hidden.svg)](https://greenkeeper.io/)
+
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mblarsen/mongoose-hidden.svg)](http://isitmaintained.com/project/mblarsen/mongoose-hidden "Average time to resolve an issue") [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/mblarsen) [![Join the chat at https://gitter.im/mblarsen/mongoose-hidden](https://badges.gitter.im/mblarsen/mongoose-hidden.svg)](https://gitter.im/mblarsen/mongoose-hidden?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
