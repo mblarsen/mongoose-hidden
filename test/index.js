@@ -644,7 +644,7 @@ describe("mongoose-hidden", function () {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/1
   describe("A document with nested documents when hiding", function () {
-    it("shouldn't remove it's nested documents", function (done) {
+    it("shouldn't remove its nested documents", function (done) {
       mongoose.modelSchemas = {}
       mongoose.models = {}
       let Company = defineModel("Company", {
@@ -686,7 +686,7 @@ describe("mongoose-hidden", function () {
   })
 
   describe("A document with a collection of nested documents", function () {
-    it("shouldn't remove it's nested documents", function (done) {
+    it("shouldn't remove its nested documents", function (done) {
       mongoose.modelSchemas = {}
       mongoose.models = {}
       let Company = defineModel("Company", {
