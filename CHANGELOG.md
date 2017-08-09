@@ -1,5 +1,13 @@
 # Changelog
 
+1.4.1
+
+Chore: Mongoose dev dependency upgrade
+
+1.4.0
+
+Support subdocument schema transformations (thanks to @Bajix)
+
 1.3.0
 
 New: Nested document can be a Schema (thanks to @lykmapipo)
