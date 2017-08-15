@@ -1,6 +1,7 @@
 # mongoose-hidden
 
-[![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mblarsen/mongoose-hidden.svg)](http://isitmaintained.com/project/mblarsen/mongoose-hidden "Average time to resolve an issue") [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
+
+[![greenkeeper badge](https://badges.greenkeeper.io/mblarsen/mongoose-hidden.svg)](https://greenkeeper.io/) [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mblarsen/mongoose-hidden.svg)](http://isitmaintained.com/project/mblarsen/mongoose-hidden "Average time to resolve an issue") [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
 
 A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow hiding of properties you do not want sent client-side, like passwords and other secrets and sensitive information.
 
