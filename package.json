@@ -29,7 +29,7 @@
   "devDependencies": {
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
-    "mocha": "^3.0.2",
+    "mocha": "^3.5.0",
     "mongoose": "^4.11",
     "should": "^11.1.2"
   }
