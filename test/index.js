@@ -35,8 +35,7 @@ describe("mongoose-hidden", function () {
   }
 
   before(function (done) {
-    mongoose.connect('mongodb://localhost/mongoose-hidden', function (
-      err) {
+    mongoose.connect('mongodb://localhost/mongoose-hidden', function (err) {
       if (err) {
         console.error('MongoDB: ' + err.message)
         console.error(
