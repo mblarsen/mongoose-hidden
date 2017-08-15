@@ -1,5 +1,11 @@
 # Changelog
 
+1.4.2
+
+Chore: Mocha dev dependency upgrade.
+New: Added license
+Fix: Minor style changes
+
 1.4.1
 
 Chore: Mongoose dev dependency upgrade
