@@ -6,9 +6,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/mblarsen/mongoose-hidden/badge.svg)](https://snyk.io/test/github/mblarsen/mongoose-hidden) 
 [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
 
-[![greenkeeper badge](https://badges.greenkeeper.io/mblarsen/mongoose-hidden.svg)](https://greenkeeper.io/) 
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mblarsen/mongoose-hidden.svg)](http://isitmaintained.com/project/mblarsen/mongoose-hidden "Average time to resolve an issue") 
-
 A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow hiding of properties you do not want sent client-side, like passwords and other secrets and sensitive information.
 
 # Install
