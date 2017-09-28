@@ -27,7 +27,7 @@
     "debug": "^3.0.1"
   },
   "devDependencies": {
-    "coveralls": "^2.11.6",
+    "coveralls": "^3.0.0",
     "istanbul": "^0.4.2",
     "mocha": "^3.5.0",
     "mongoose": "^4.11",
