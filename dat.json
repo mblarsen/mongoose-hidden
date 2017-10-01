@@ -1,0 +1,5 @@
+{
+  "url": "dat://fe1cb840771a6ec89f691ff269b0c2ae13b4fa697bbb4523e21e9cfecd2f09c9/",
+  "title": "mongoose-hidden",
+  "description": "A Mongoose schema plugin for filtering properties you usually do not want to sent client-side like passwords and ids."
+}
