@@ -24,22 +24,22 @@ let Schema = mongoose.Schema
 let mongooseHidden = require('mongoose-hidden')()
 
 let UserSchema = new Schema(
-    name: String,
-    password: { type: String, hide: true },
-    email: String
+  name: String,
+  password: { type: String, hide: true },
+  email: String
 )
 
 UserSchema.plugin(mongooseHidden)
 
 let User = mongoose.model('User', UserSchema)
 let user = new User({
-    name: 'Joe',
-    email: 'joe@example.com',
-    password: 'secret'
+  name: 'Joe',
+  email: 'joe@example.com',
+  password: 'secret'
 })
 
 user.save(function() {
-    console.log(user.toJSON()) // { name: 'Joe', email: 'joe@example.com' }
+  console.log(user.toJSON()) // { name: 'Joe', email: 'joe@example.com' }
 })
 ```
 
@@ -49,16 +49,16 @@ A property will be hidden in all cases when `toJSON` and `toObject` is invoked i
 
 ```javascript
 let UserSchema = new Schema(
-    ...
-    password: { type: String, hideJSON: true }, // hidden for toJSON but not for toObject
-    ...
+  ...
+  password: { type: String, hideJSON: true }, // hidden for toJSON but not for toObject
+  ...
 )
 ```
 
 The value of `hide`, `hideJSON`, and `hideObject` can be a callback with the following signature:
 
 ```javascript
-    function (doc, ret) // same as the transform function callback
+function (doc, ret) // same as the transform function callback
 ```
 
 ### Option: `hidden`
@@ -95,11 +95,11 @@ PaymentSchema.plugin(mongooseHidden, { hidden: { _id: false, authToken: true } }
 
 ```javascript
 if (app === 'web') {
-    UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
+  UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
 } else if (app == 'private-api') {
-    UserSchema.plugin(mongooseHidden, { hidden: { password: true } })
+  UserSchema.plugin(mongooseHidden, { hidden: { password: true } })
 } else {
-    UserSchema.plugin(mongooseHidden)
+  UserSchema.plugin(mongooseHidden)
 }
 ```
 
@@ -148,8 +148,8 @@ let mongooseHidden = require('mongoose-hidden')()
 
 // First define transform function
 UserSchema.set('toJSON', { transform: function (doc, ret, opt) {
-    ret['name'] = 'Mr ' + ret['name']
-    return ret
+  ret['name'] = 'Mr ' + ret['name']
+  return ret
 }})
 
 // Then apply plugin
