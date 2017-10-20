@@ -10,48 +10,56 @@ A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow hi
 
 # Install
 
-    npm i mongoose-hidden
+```
+npm i mongoose-hidden
+```
 
 # Usage
 
 A simple example the hides passwords:
 
-    let mongoose = require('mongoose')
-    let Schema = mongoose.Schema
-    let mongooseHidden = require('mongoose-hidden')()
+```javascript
+let mongoose = require('mongoose')
+let Schema = mongoose.Schema
+let mongooseHidden = require('mongoose-hidden')()
 
-    let UserSchema = new Schema(
-        name: String,
-        password: { type: String, hide: true },
-        email: String
-    )
+let UserSchema = new Schema(
+    name: String,
+    password: { type: String, hide: true },
+    email: String
+)
 
-    UserSchema.plugin(mongooseHidden)
+UserSchema.plugin(mongooseHidden)
 
-    let User = mongoose.model('User', UserSchema)
-    let user = new User({
-        name: 'Joe',
-        email: 'joe@example.com',
-        password: 'secret'
-    })
+let User = mongoose.model('User', UserSchema)
+let user = new User({
+    name: 'Joe',
+    email: 'joe@example.com',
+    password: 'secret'
+})
 
-    user.save(function() {
-        console.log(user.toJSON()) // { name: 'Joe', email: 'joe@example.com' }
-    })
+user.save(function() {
+    console.log(user.toJSON()) // { name: 'Joe', email: 'joe@example.com' }
+})
+```
 
 ### Property params: `hide`, `hideJSON`, `hideObject`
 
 A property will be hidden in all cases when `toJSON` and `toObject` is invoked if the property parameter `hide` is used. Alternatively use `hideJSON` or `hideObject` to target either of the serialization functions.
 
-    let UserSchema = new Schema(
-        ...
-        password: { type: String, hideJSON: true }, // hidden for toJSON but not for toObject
-        ...
-    )
+```javascript
+let UserSchema = new Schema(
+    ...
+    password: { type: String, hideJSON: true }, // hidden for toJSON but not for toObject
+    ...
+)
+```
 
 The value of `hide`, `hideJSON`, and `hideObject` can be a callback with the following signature:
 
+```javascript
     function (doc, ret) // same as the transform function callback
+```
 
 ### Option: `hidden`
 
@@ -63,36 +71,46 @@ There are two methods: when creating the plugin and when attaching the plugin, a
 
 #### Method 1: constructor param
 
-    let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
-    UserSchema.plugin(mongooseHidden)
+```javascript
+let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
+UserSchema.plugin(mongooseHidden)
+```
 
 #### Method 2: attach plugin param
 
-    let mongooseHidden = require('mongoose-hidden')()
-    UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
+```javascript
+let mongooseHidden = require('mongoose-hidden')()
+UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
+```
 
 #### Method 1+2: combination
 
-    let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
-    UserSchema.plugin(mongooseHidden, { hidden: { resetToken: true } })
-    PaymentSchema.plugin(mongooseHidden, { hidden: { _id: false, authToken: true } }) // unhides _id
+```javascript
+let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
+UserSchema.plugin(mongooseHidden, { hidden: { resetToken: true } })
+PaymentSchema.plugin(mongooseHidden, { hidden: { _id: false, authToken: true } }) // unhides _id
+```
 
 .. another example:
 
-    if (app === 'web') {
-        UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
-    } else if (app == 'private-api') {
-        UserSchema.plugin(mongooseHidden, { hidden: { password: true } })
-    } else {
-        UserSchema.plugin(mongooseHidden)
-    }
+```javascript
+if (app === 'web') {
+    UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
+} else if (app == 'private-api') {
+    UserSchema.plugin(mongooseHidden, { hidden: { password: true } })
+} else {
+    UserSchema.plugin(mongooseHidden)
+}
+```
 
 ### Option: `defaultHidden`
 
 By default `_id` and `__v` properties are hidden. You can override this behaviour, when you load the plugin:
 
-    let mongooseHidden = require('mongoose-hidden')({ defaultHidden: { password: true } })
-    UserSchema.plugin(mongooseHidden)
+```javascript
+let mongooseHidden = require('mongoose-hidden')({ defaultHidden: { password: true } })
+UserSchema.plugin(mongooseHidden)
+```
 
 This effectively overrides the plugin defaults leaving only `password` hidden and `_id` and `__v` are left untouched.
 
@@ -104,12 +122,14 @@ _since 0.3.1_
 
 Hiding of virtuals can be done as well. Be sure to include the plugin after you turn on virtuals.
 
-    // By default in Mongoose virtuals will not be included. Turn on before enabling plugin.
-    schema.set('toJSON', { virtuals: true });
-    schema.set('toObject', { virtuals: true });
+```javascript
+// By default in Mongoose virtuals will not be included. Turn on before enabling plugin.
+schema.set('toJSON', { virtuals: true });
+schema.set('toObject', { virtuals: true });
 
-    // Enable plugin
-    schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
+// Enable plugin
+schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
+```
 
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`.
 
@@ -123,16 +143,18 @@ _since 0.6_
 
 The `mongoose-hidden` is written as a transform function. If you implement your own transform functions be sure to add them to prior to applying the plugin. The plugin will then invoke that function before hiding properties.
 
-    let mongooseHidden = require('mongoose-hidden')()
+```javascript
+let mongooseHidden = require('mongoose-hidden')()
 
-    // First define transform function
-    UserSchema.set('toJSON', { transform: function (doc, ret, opt) {
-        ret['name'] = 'Mr ' + ret['name']
-        return ret
-    }})
+// First define transform function
+UserSchema.set('toJSON', { transform: function (doc, ret, opt) {
+    ret['name'] = 'Mr ' + ret['name']
+    return ret
+}})
 
-    // Then apply plugin
-    UserSchema.plugin(mongooseHidden)
+// Then apply plugin
+UserSchema.plugin(mongooseHidden)
+```
 
 All names will now be prefixed with "Mr".
 
@@ -144,7 +166,9 @@ See [CHANGELOG.md](https://github.com/mblarsen/mongoose-hidden/blob/master/CHANG
 
 * Always set `{ getters: true, virtuals: true }` before installing plugin if you want virtuals to be returned:
 
-    schema.set('toJSON', { getters: true, virtuals: true });
-    schema.plugin(require(mongooseHidden));
+```javascript
+schema.set('toJSON', { getters: true, virtuals: true });
+schema.plugin(require(mongooseHidden));
+```
 
 * Recursive use of hide not supported, but nested documents/objects are supported.
