@@ -1,5 +1,19 @@
 # Changelog
 
+1.5.0
+
+refactor: Replaced get and delete path parts with mpath
+
+I had wanted to get rid of the dot-path code for a long time. With this
+commit mpath is introduced. The same package used in Mongoose. It could
+not replace the set function, since it has no create functionality but
+only set.
+
+I also cleaned up the options and test section so they are easier to
+reason about.
+
+Overall a slimmer package.
+
 1.4.2
 
 Chore: Mocha dev dependency upgrade.

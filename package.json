@@ -26,7 +26,8 @@
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
   "dependencies": {
-    "debug": "^3.0.1"
+    "debug": "^3.0.1",
+    "mpath": "^0.3.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",

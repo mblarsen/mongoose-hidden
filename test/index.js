@@ -7,9 +7,7 @@ const plugin = require('../index')
 const Schema = mongoose.Schema
 const mongooseHidden = plugin()
 
-const getPath = plugin.__test.getPath
-const setPath = plugin.__test.setPath
-const deletePath = plugin.__test.deletePath
+const setPath = plugin.__test__.setPath
 
 describe("mongoose-hidden", function () {
   let testUser = { name: "Joe", email: "joe@example.com", password: "secret" }
@@ -123,7 +121,7 @@ describe("mongoose-hidden", function () {
           type: String,
           hide: true
         }
-      }, { hide: false })
+      }, { hide: false, hideJSON: true, hideObject: true })
       let user = new User(testUser)
       user.save(function () {
         let userJson = user.toJSON()
@@ -869,30 +867,6 @@ describe("mongoose-hidden", function () {
     })
   })
 
-  describe("Getting path on an object", function () {
-    it("should return property", function () {
-      let obj = { password: "secret" }
-      getPath(obj, "password").should.equal("secret")
-    })
-    it("should return nested property", function () {
-      let obj = {
-        file: { ext: "txt" },
-        rights: { inland: { case: "A0003" } }
-      }
-      getPath(obj, "file.ext").should.equal("txt")
-      getPath(obj, "rights.inland.case").should.equal("A0003")
-    })
-    it("should return undefined for path that doesn't exist", function () {
-      let obj = {
-        file: {},
-        a: { b: "not object" }
-      }
-      should.not.exist(getPath(obj, "password"))
-      should.not.exist(getPath(obj, "file.ext"))
-      should.not.exist(getPath(obj, "email.name"))
-      should.not.exist(getPath(obj, "a.b.c"))
-    })
-  })
   describe("Setting a path on an object", function () {
     it("should set plain property", function () {
       let obj = { password: "secret", }
@@ -922,23 +896,6 @@ describe("mongoose-hidden", function () {
         setPath(obj, "rights.outlandish.case", "A0004")
         obj.rights.outlandish.case.should.equal("A0004")
       })
-  })
-  describe("Deleting a path on an object", function () {
-    it("should remove property", function () {
-      let obj = {
-        age: 42,
-        name: { first: "Joe" },
-        email: { home: "abc", work: "def" }
-      }
-      deletePath(obj, "age")
-      should.not.exist(obj.age)
-      deletePath(obj, "name")
-      should.not.exist(obj.name)
-      deletePath(obj, "email.home")
-      should.exist(obj.email)
-      should.not.exist(obj.email.home)
-      should.exist(obj.email.work)
-    })
   })
 
   describe('Model with embedded schema', function () {
