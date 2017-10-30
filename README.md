@@ -172,3 +172,7 @@ schema.plugin(require(mongooseHidden));
 ```
 
 * Recursive use of hide not supported, but nested documents/objects are supported.
+
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/okYdxs3cWxjapKfPcTg9nLwG/mblarsen/mongoose-hidden'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/okYdxs3cWxjapKfPcTg9nLwG/mblarsen/mongoose-hidden.svg' />
+</a>
