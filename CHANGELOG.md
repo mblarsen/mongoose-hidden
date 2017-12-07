@@ -1,5 +1,9 @@
 # Changelog
 
+1.5.1
+
+- fix: 1.5.0 would add entries from the schema that were not in the original transform (thanks to @proswdev)
+
 1.5.0
 
 refactor: Replaced get and delete path parts with mpath
