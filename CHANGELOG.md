@@ -1,5 +1,10 @@
 # Changelog
 
+1.5.2
+
+- chore(package): update mongoose to version 5.0.0
+- chore(package): update mocha to version 5.0.0
+
 1.5.1
 
 - fix: 1.5.0 would add entries from the schema that were not in the original transform (thanks to @proswdev)
