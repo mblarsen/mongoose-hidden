@@ -64,8 +64,6 @@ function (doc, ret) // same as the transform function callback
 
 ### Option: `hidden`
 
-_since 0.7_
-
 If you find yourself hiding the same properties over and over again you can initialize the plugin with the `hidden` option.
 
 There are two methods: when creating the plugin and when attaching the plugin, and they can be combined.
@@ -119,8 +117,6 @@ Alternatively if you only want to unhide the params hidden by the plugin by defa
 
 ### Option: `virtuals`
 
-_since 0.3.1_
-
 Hiding of virtuals can be done as well. Be sure to include the plugin after you turn on virtuals.
 
 ```javascript
@@ -139,8 +135,6 @@ If have nested virtuals use the path for the key above, e.g. `'nested.virtual': 
 _Note: If you don't turn on virtuals for `toObject`, `fullname` in the above example `fullname` will *NOT* be hidden despite its `hideJSON` value._
 
 ### Transform
-
-_since 0.6_
 
 The `mongoose-hidden` is written as a transform function. If you implement your own transform functions be sure to add them to prior to applying the plugin. The plugin will then invoke that function before hiding properties.
 
