@@ -9,10 +9,6 @@
 
 A Mongoose schema plugin that hooks into `toJSON()` and `toObject()` to allow hiding of properties you do not want sent client-side, like passwords and other secrets and sensitive information.
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/okYdxs3cWxjapKfPcTg9nLwG/mblarsen/mongoose-hidden'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/okYdxs3cWxjapKfPcTg9nLwG/mblarsen/mongoose-hidden.svg' />
-</a>
-
 # Install
 
 ```
