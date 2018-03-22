@@ -4,7 +4,7 @@
 [![build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) 
 [![Coverage Status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) 
 [![Known Vulnerabilities](https://snyk.io/test/github/mblarsen/mongoose-hidden/badge.svg)](https://snyk.io/test/github/mblarsen/mongoose-hidden) 
-[![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden/)
+[![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden) [![](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden)
 [![Donate](https://img.shields.io/badge/%24-donate-red.svg)](https://freewallet.org/id/mblarsen/btc)
 [![chat](https://img.shields.io/badge/chat-on%20discord-7289DA.svg?style=flat-square)](https://discord.gg/fg7c4SC)
 
