@@ -27,7 +27,7 @@
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
   "dependencies": {
     "debug": "^3.0.1",
-    "mpath": "^0.4.0"
+    "mpath": "^0.5.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
