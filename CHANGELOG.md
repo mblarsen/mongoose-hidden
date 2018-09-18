@@ -1,5 +1,11 @@
 # Changelog
 
+
+1.6.0
+
+Drop support for node 4 + 5, supported node version is [Maintenance LTS](https://github.com/nodejs/Release). Version 1.5.4 is the last version
+to support older Node versions.
+
 1.5.2
 
 - chore(package): update mongoose to version 5.0.0
