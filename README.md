@@ -4,7 +4,7 @@
 [![Build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) 
 [![Coverage status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) 
 [![Known vulnerabilities](https://snyk.io/test/github/mblarsen/mongoose-hidden/badge.svg)](https://snyk.io/test/github/mblarsen/mongoose-hidden) 
-[![Total downloads](https://img.shields.io/npm/dt/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
 [![Monthly downloads](https://img.shields.io/npm/dm/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden)
 [![NPM version](http://img.shields.io/npm/v/mongoose-hidden.svg)](https://www.npmjs.com/package/mongoose-hidden)
 
