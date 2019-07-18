@@ -1,5 +1,8 @@
 # Changelog
 
+1.6.2
+
+- added TypeScript definitions (thanks to @marshalys)
 
 1.6.0
 
