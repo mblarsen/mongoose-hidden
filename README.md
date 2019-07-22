@@ -131,7 +131,7 @@ schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
 
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`.
 
-If have nested virtuals use the path for the key above, e.g. `'nested.virtual': 'hideJSON'`.
+For nested virtuals use the path for the key above, e.g. `'nested.virtual': 'hideJSON'`.
 
 _Note: If you don't turn on virtuals for `toObject`, `fullname` in the above example `fullname` will *NOT* be hidden despite its `hideJSON` value._
 
