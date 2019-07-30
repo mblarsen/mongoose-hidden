@@ -2,6 +2,7 @@
 
 
 [![Build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden) 
+[![codebeat badge](https://codebeat.co/badges/05e78d4b-9038-4339-8e67-0702cc4416a2)](https://codebeat.co/projects/github-com-mblarsen-mongoose-hidden-master)
 [![Coverage status](https://coveralls.io/repos/github/mblarsen/mongoose-hidden/badge.svg?branch=master)](https://coveralls.io/github/mblarsen/mongoose-hidden?branch=master) 
 [![Known vulnerabilities](https://snyk.io/test/github/mblarsen/mongoose-hidden/badge.svg)](https://snyk.io/test/github/mblarsen/mongoose-hidden) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
