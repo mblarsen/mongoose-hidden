@@ -41,8 +41,8 @@ describe('mongoose-hidden', function() {
       schemaProperties = name
       name = 'User'
     }
-    let schema
-      = schemaProperties instanceof Schema ? schemaProperties : new Schema(schemaProperties)
+    let schema =
+      schemaProperties instanceof Schema ? schemaProperties : new Schema(schemaProperties)
     schema.plugin(mongooseHidden, pluginOptions || {})
     return mongoose.model(name, schema, undefined)
   }
@@ -676,9 +676,9 @@ describe('mongoose-hidden', function() {
       company.save(function(err, freshCompany) {
         user.company = company._id
         user.save(function() {
-          User.findOne().
-            populate('company').
-            exec(function(err, freshUser) {
+          User.findOne()
+            .populate('company')
+            .exec(function(err, freshUser) {
               should.exist(freshUser.company)
               freshUser.company.name.should.equal('GOGGLE')
               let userJson = freshUser.toJSON()
@@ -728,9 +728,9 @@ describe('mongoose-hidden', function() {
           user.companies.push(company)
           user.companies.push(company2)
           user.save(function() {
-            User.findOne().
-              populate('companies').
-              exec(function(err, freshUser) {
+            User.findOne()
+              .populate('companies')
+              .exec(function(err, freshUser) {
                 should.exist(freshUser.companies)
                 freshUser.companies[0].name.should.equal('GOGGLE')
                 freshUser.companies[1].name.should.equal('APPLE')
