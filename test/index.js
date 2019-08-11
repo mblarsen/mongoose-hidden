@@ -7,7 +7,7 @@ const plugin = require('../index')
 const Schema = mongoose.Schema
 const mongooseHidden = plugin()
 
-const setPath = plugin.__test__.setPath
+const mpath = require('../lib/mpath.js')
 
 describe('mongoose-hidden', function() {
   let testUser = { name: 'Joe', email: 'joe@example.com', password: 'secret' }
@@ -888,28 +888,30 @@ describe('mongoose-hidden', function() {
   describe('Setting a path on an object', function() {
     it('should set plain property', function() {
       let obj = { password: 'secret' }
-      setPath(obj, 'password', 'no more secrets')
+      mpath.set('password', 'no more secrets', obj)
       obj.password.should.equal('no more secrets')
     })
     it("should set plain property and create if it doesn't exist", function() {
       let obj = {}
-      setPath(obj, 'password', 'no more secrets')
+      mpath.set('password', 'no more secrets', obj)
       obj.password.should.equal('no more secrets')
     })
     it('should set nested property', function() {
       let obj = { name: { first: 'Joe' } }
-      setPath(obj, 'name.first', 'Jane')
+      mpath.set('name.first', 'Jane', obj)
       obj.name.first.should.equal('Jane')
-      setPath(obj, 'name.last', 'Doe')
+      mpath.set('name.last', 'Doe', obj)
       obj.name.last.should.equal('Doe')
     })
     it("should set nested property and create path if it doesn't exist", function() {
       let obj = {}
-      setPath(obj, 'name.first', 'Jane')
+      mpath.set('name.first', 'Jane', obj)
       obj.name.first.should.equal('Jane')
-      setPath(obj, 'rights.inland.case', 'A0003')
+      mpath.set('name.pets', ['Lolli', 'Pop'], obj)
+      obj.name.pets.should.deepEqual(['Lolli', 'Pop'])
+      mpath.set('rights.inland.case', 'A0003', obj)
       obj.rights.inland.case.should.equal('A0003')
-      setPath(obj, 'rights.outlandish.case', 'A0004')
+      mpath.set('rights.outlandish.case', 'A0004', obj)
       obj.rights.outlandish.case.should.equal('A0004')
     })
   })
