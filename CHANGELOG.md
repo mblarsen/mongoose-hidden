@@ -1,5 +1,9 @@
 # Changelog
 
+1.7.0
+
+- replace custom setPath function with mpath.set (#69)
+
 1.6.2
 
 - added TypeScript definitions (thanks to @marshalys)
