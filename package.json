@@ -26,14 +26,14 @@
   "license": "MIT",
   "bugs": "http://github.com/mblarsen/mongoose-hidden/issues",
   "dependencies": {
-    "debug": "^4.0.1",
+    "debug": "^4.1.1",
     "mpath": "^0.6.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.6",
     "istanbul": "^0.4.2",
     "mocha": "^6.0.0",
-    "mongoose": "^5.0.0",
+    "mongoose": "^5.6.9",
     "should": "^13.1.0"
   },
   "thanks": "https://flattr.com/@mblarsen"
