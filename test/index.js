@@ -951,4 +951,31 @@ describe('mongoose-hidden', function() {
       done()
     })
   })
+  describe.only('mpath patch', () => {
+    it('should throw if not string', () => {
+      const set = () => mpath.set(null, 'Jane', {})
+      set.should.throw(TypeError)
+    })
+    it('shoud set key if path = key', () => {
+      const result = {}
+      mpath.set('name', 'Jane', result)
+      result.name.should.equal('Jane')
+    })
+    it('should set key at depth', () => {
+      const result = {}
+      mpath.set('my.name.is', 'Jane', result)
+      result.my.name.is.should.equal('Jane')
+    })
+    it('should set key at depth and preserve other keys', () => {
+      const result = {my: {dog: {Kenny: true}}}
+      mpath.set('my.name.is', 'Jane', result)
+      result.my.name.is.should.equal('Jane')
+      result.my.dog.Kenny.should.equal(true)
+    })
+    it('should be able to set arrays', () => {
+      const result = {}
+      mpath.set('my.name', ['Jane', 'Doe'], result)
+      result.my.name.should.deepEqual(['Jane', 'Doe'])
+    })
+  })
 })
