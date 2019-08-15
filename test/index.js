@@ -951,7 +951,7 @@ describe('mongoose-hidden', function() {
       done()
     })
   })
-  describe.only('mpath patch', () => {
+  describe('mpath patch', () => {
     it('should throw if not string', () => {
       const set = () => mpath.set(null, 'Jane', {})
       set.should.throw(TypeError)
