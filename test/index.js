@@ -691,6 +691,54 @@ describe('mongoose-hidden', function() {
       })
     })
   })
+  describe('A document with nested documents (array refs) when hiding', function() {
+    it("shouldn't remove its nested documents", function(done) {
+      mongoose.modelSchemas = {}
+      mongoose.models = {}
+      let Company = defineModel(
+        'Company',
+        {
+          name: String,
+          code: String,
+        },
+        { hideObject: false },
+        {}
+      )
+      let User = defineModel('User', {
+        name: String,
+        email: String,
+        companies: [
+          {
+            type: Schema.ObjectId,
+            ref: 'Company',
+          },
+        ],
+        password: {
+          type: String,
+          hide: true,
+        },
+      })
+
+      let company = new Company(testCompany)
+      let user = new User(testUser)
+      company.save(function(err, freshCompany) {
+        user.companies.push(company._id)
+        user.save(function() {
+          User.findOne()
+            .populate('companies')
+            .exec(function(err, freshUser) {
+              should.exist(freshUser.companies)
+              should.equal(1, freshUser.companies.length)
+              freshUser.companies[0].name.should.equal('GOGGLE')
+              let userJson = freshUser.toJSON()
+              should.equal(1, userJson.companies.length)
+              should.equal('GOGGLE', userJson.companies[0].name)
+              done()
+            })
+        })
+      })
+    })
+  })
 
   describe('A document with a collection of nested documents', function() {
     it("shouldn't remove its nested documents", function(done) {
@@ -967,7 +1015,7 @@ describe('mongoose-hidden', function() {
       result.my.name.is.should.equal('Jane')
     })
     it('should set key at depth and preserve other keys', () => {
-      const result = {my: {dog: {Kenny: true}}}
+      const result = { my: { dog: { Kenny: true } } }
       mpath.set('my.name.is', 'Jane', result)
       result.my.name.is.should.equal('Jane')
       result.my.dog.Kenny.should.equal(true)
