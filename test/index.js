@@ -691,6 +691,64 @@ describe('mongoose-hidden', function() {
       })
     })
   })
+
+  // https://github.com/mblarsen/mongoose-hidden/issues/73
+  describe('A document with nested documents when hiding', function() {
+    it("shouldn't remove its nested documents", function(done) {
+      mongoose.modelSchemas = {}
+      mongoose.models = {}
+      let Company = defineModel(
+        'Company',
+        {
+          name: String,
+          code: String,
+        },
+        { hideObject: false },
+        {}
+      )
+      let User = defineModel('User', {
+        name: String,
+        email: String,
+        companies: [{
+          description: { type: String },
+          link: { type: Schema.ObjectId, ref: 'Company' }
+        }],
+        password: {
+          type: String,
+          hide: true,
+        },
+      })
+
+      let company = new Company(testCompany)
+      let user = new User(testUser)
+      company.save(function(err, freshCompany) {
+        user.companies = { description: 'mock-description', link: company._id}
+        user.save(function() {
+          User.findOne()
+            .populate('companies.link')
+            .exec(function(err, freshUser) {
+              should.exist(freshUser.name)
+              should.exist(freshUser.email)
+              should.exist(freshUser.password)
+              should.exist(freshUser.companies)
+              should.exist(freshUser.companies[0])
+              should.exist(freshUser.companies[0].description) // failed
+              should.exist(freshUser.companies[0].link)  // failed
+
+              let userJson = freshUser.toJSON()
+              should.not.exist(userJson.password)
+              should.exist(userJson.name)
+              should.exist(userJson.email)
+              should.exist(userJson.companies)
+              should.exist(userJson.companies[0].description)  // failed
+              should.exist(userJson.companies[0].link)  // failed
+              done()
+            })
+        })
+      })
+    })
+  })
+
   describe('A document with nested documents (array refs) when hiding', function() {
     it("shouldn't remove its nested documents", function(done) {
       mongoose.modelSchemas = {}
