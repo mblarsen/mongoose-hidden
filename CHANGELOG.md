@@ -1,5 +1,9 @@
 # Changelog
 
+1.8.0
+
+- reveret to old setPath of pre-1.7 but still use the mpath.set patching approach to make the client compatible with mpath.set
+
 1.7.0
 
 - replace custom setPath function with mpath.set (#69)
