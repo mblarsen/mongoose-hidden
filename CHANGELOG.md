@@ -1,5 +1,9 @@
 # Changelog
 
+1.8.1
+
+- fix bug introduced in 1.7.0 when populating relations using `match` (issue #75)
+
 1.8.0
 
 - reveret to old setPath of pre-1.7 but still use the mpath.set patching approach to make the client compatible with mpath.set

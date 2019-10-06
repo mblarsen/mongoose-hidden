@@ -116,7 +116,7 @@ describe('github-issues', function() {
 
   // Github issue https://github.com/mblarsen/mongoose-hidden/issues/75
   describe('Bug: subDocument returns unpopulated if its not found', function() {
-    it('should return null', async function() {
+    it('should return empty array', function(done) {
       const HostSchema = new mongoose.Schema(
         {
           ipAddress: String,
