@@ -709,10 +709,12 @@ describe('mongoose-hidden', function() {
       let User = defineModel('User', {
         name: String,
         email: String,
-        companies: [{
-          description: { type: String },
-          link: { type: Schema.ObjectId, ref: 'Company' }
-        }],
+        companies: [
+          {
+            description: { type: String },
+            link: { type: Schema.ObjectId, ref: 'Company' },
+          },
+        ],
         password: {
           type: String,
           hide: true,
@@ -722,7 +724,7 @@ describe('mongoose-hidden', function() {
       let company = new Company(testCompany)
       let user = new User(testUser)
       company.save(function(err, freshCompany) {
-        user.companies = { description: 'mock-description', link: company._id}
+        user.companies = { description: 'mock-description', link: company._id }
         user.save(function() {
           User.findOne()
             .populate('companies.link')
@@ -733,15 +735,15 @@ describe('mongoose-hidden', function() {
               should.exist(freshUser.companies)
               should.exist(freshUser.companies[0])
               should.exist(freshUser.companies[0].description) // failed
-              should.exist(freshUser.companies[0].link)  // failed
+              should.exist(freshUser.companies[0].link) // failed
 
               let userJson = freshUser.toJSON()
               should.not.exist(userJson.password)
               should.exist(userJson.name)
               should.exist(userJson.email)
               should.exist(userJson.companies)
-              should.exist(userJson.companies[0].description)  // failed
-              should.exist(userJson.companies[0].link)  // failed
+              should.exist(userJson.companies[0].description) // failed
+              should.exist(userJson.companies[0].link) // failed
               done()
             })
         })
