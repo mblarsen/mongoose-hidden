@@ -7,8 +7,6 @@ const plugin = require('../index')
 const Schema = mongoose.Schema
 const mongooseHidden = plugin()
 
-const mpath = require('../lib/mpath.js')
-
 describe('github-issues', function() {
   let testUser = { name: 'Joe', email: 'joe@example.com', password: 'secret' }
   let testUserSub = {
