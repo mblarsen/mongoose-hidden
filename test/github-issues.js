@@ -151,15 +151,20 @@ describe('github-issues', function() {
       ProjectSchema.plugin(mongooseHidden)
       const Project = mongoose.model('Project', ProjectSchema)
 
-      const host = await Host.create({ ipAddress: '192.168.1.1', status: 'OFFLINE' })
-      await Project.create({ name: 'Default', hosts: [host._id] })
-
-      const projects = await Project.find({}).populate({
-        path: 'hosts',
-        match: { status: 'ONLINE' },
+      Host.create({ ipAddress: '192.168.1.1', status: 'OFFLINE' }).then(host => {
+        Project.create({ name: 'Default', hosts: [host._id] }).then(() => {
+          Project.find({})
+            .populate({
+              path: 'hosts',
+              match: { status: 'ONLINE' },
+            })
+            .then(projects => {
+              projects.length.should.equal(1)
+              projects[0].hosts.length.should.equal(0)
+              done()
+            })
+        })
       })
-      projects.length.should.equal(1)
-      projects[0].hosts.length.should.equal(0)
     })
   })
 })
