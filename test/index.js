@@ -943,54 +943,6 @@ describe('mongoose-hidden', function() {
     })
   })
 
-  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/13
-  describe('A documents with non-schema properties set to hidden', function() {
-    it('should hide the properties', function(done) {
-      let User = defineModel(
-        {
-          name: String,
-          email: String,
-          password: String,
-        },
-        { hidden: { email: true } }
-      )
-      let user = new User(testUser)
-      user.save(function(err, savedUser) {
-        User.schema.remove('email')
-        let User2 = mongoose.model('User', User.schema, undefined, { cache: false })
-        User2.findById(savedUser['_id'], function(err2, john) {
-          let userJson = john.toObject()
-          let testUserWithoutEmail = {
-            name: testUser.name,
-            password: testUser.password,
-          }
-          userJson.should.deepEqual(testUserWithoutEmail)
-          done()
-        })
-      })
-    })
-  })
-
-  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/12
-  describe('A model with nested documents', function() {
-    it('should return only the visible parts', function(done) {
-      let User = defineModel({
-        name: String,
-        email: {
-          prefix: { type: String },
-          suffix: { type: String, hide: true },
-        },
-        password: String,
-      })
-      let user = new User(testUser3)
-      let userJson = user.toObject()
-      let testUser3WithoutEmailSuffix = Object.assign({}, testUser3)
-      delete testUser3WithoutEmailSuffix.email.suffix
-      userJson.should.deepEqual(testUser3WithoutEmailSuffix)
-      done()
-    })
-  })
-
   describe('Setting a path on an object', function() {
     it('should set plain property', function() {
       let obj = { password: 'secret' }
