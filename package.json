@@ -19,7 +19,7 @@
   "main": "index.js",
   "scripts": {
     "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v && rm -rf ./coverage",
-    "mocha": "./node_modules/mocha/bin/_mocha",
+    "mocha": "mocha",
     "preversion": "npm run mocha",
     "postversion": "git push && git push --tags"
   },
