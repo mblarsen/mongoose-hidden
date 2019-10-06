@@ -158,7 +158,8 @@ describe('github-issues', function() {
         path: 'hosts',
         match: { status: 'ONLINE' },
       })
-      projects.length.should.equal(0)
+      projects.length.should.equal(1)
+      projects[0].hosts.length.should.equal(0)
     })
   })
 })
