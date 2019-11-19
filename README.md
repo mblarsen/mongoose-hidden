@@ -19,7 +19,7 @@ npm i mongoose-hidden
 
 # Usage
 
-A simple example the hides passwords:
+A simple example that hides passwords:
 
 ```javascript
 let mongoose = require('mongoose')
@@ -138,7 +138,7 @@ _Note: If you don't turn on virtuals for `toObject`, `fullname` in the above exa
 
 ### Transform
 
-The `mongoose-hidden` is written as a transform function. If you implement your own transform functions be sure to add them to prior to applying the plugin. The plugin will then invoke that function before hiding properties.
+The `mongoose-hidden` is written as a transform function. If you implement your own transform functions be sure to add them prior to applying the plugin. The plugin will then invoke that function before hiding properties.
 
 ```javascript
 let mongooseHidden = require('mongoose-hidden')()
