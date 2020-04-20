@@ -201,7 +201,7 @@ describe('github-issues', function() {
             Object.keys(cred).should.deepEqual(['login'])
           }
           done()
-        })
+        }).catch(done)
       })
     })
   })
