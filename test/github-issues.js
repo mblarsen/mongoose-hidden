@@ -167,4 +167,42 @@ describe('github-issues', function() {
       })
     })
   })
+
+  // Github issue https://github.com/mblarsen/mongoose-hidden/issues/82
+  describe('Bug: elements of array is visible', function() {
+    it('password should be hidden', function(done) {
+      const AuthSchema = new mongoose.Schema(
+        {
+          login: String,
+          password: {
+            type: String,
+            hide: true,
+          }
+        }, { _id: false }
+      )
+      const HostSchema = new mongoose.Schema(
+        {
+          name: String,
+          credentials: [AuthSchema],
+        },
+        {
+          timestamps: { createdAt: 'created', updatedAt: 'modified' },
+        }
+      )
+      HostSchema.set('toObject', { virtuals: true })
+      HostSchema.set('toJSON', { virtuals: true })
+      HostSchema.plugin(mongooseHidden)
+      const Host = mongoose.model('Host', HostSchema)
+
+      Host.create({ name: 'Main', credentials: [{ login: 'root', password: '123456' }] }).then(() => {
+        Host.findOne({ name: 'Main' }).then(host => {
+          const obj = host.toObject();
+          for (const cred of obj.credentials) {
+            Object.keys(cred).should.deepEqual(['login'])
+          }
+          done()
+        })
+      })
+    })
+  })
 })
