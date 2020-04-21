@@ -65,6 +65,15 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "binki",
+      "name": "Nathan Phillip Brink",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/82626?v=4",
+      "profile": "https://twitter.com/ohnobinki",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
