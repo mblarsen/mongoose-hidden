@@ -44,6 +44,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "AlbertHambardzumyan",
+      "name": "Albert Hambardzumyan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11527341?v=4",
+      "profile": "https://github.com/AlbertHambardzumyan",
+      "contributions": [
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
