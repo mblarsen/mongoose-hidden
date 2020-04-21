@@ -1,5 +1,9 @@
 # Changelog
 
+next
+
+- refactor: clean the codebase to make it easier to contribute
+
 1.9.0
 
 - feat: support for nested documents (issue #83)
