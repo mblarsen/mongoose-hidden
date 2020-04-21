@@ -1,6 +1,6 @@
 # mongoose-hidden
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -195,6 +195,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Bajix"><img src="https://avatars3.githubusercontent.com/u/4229773?v=4" width="100px;" alt=""/><br /><sub><b>Thomas Sieverding</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3ABajix" title="Bug reports">🐛</a> <a href="https://github.com/mblarsen/mongoose-hidden/commits?author=Bajix" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/lykmapipo"><img src="https://avatars3.githubusercontent.com/u/1610857?v=4" width="100px;" alt=""/><br /><sub><b>lally elias</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3Alykmapipo" title="Bug reports">🐛</a> <a href="#maintenance-lykmapipo" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 

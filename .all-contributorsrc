@@ -84,6 +84,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "lykmapipo",
+      "name": "lally elias",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1610857?v=4",
+      "profile": "https://github.com/lykmapipo",
+      "contributions": [
+        "bug",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
