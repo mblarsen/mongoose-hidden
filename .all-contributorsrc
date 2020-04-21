@@ -94,6 +94,17 @@
         "bug",
         "maintenance"
       ]
+    },
+    {
+      "login": "lavarsicious",
+      "name": "Dan Trocchio",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/938128?v=4",
+      "profile": "http://infiniscene.com",
+      "contributions": [
+        "bug",
+        "test",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
