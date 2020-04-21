@@ -191,7 +191,7 @@ describe('github-issues', function() {
       )
       HostSchema.set('toObject', { virtuals: true })
       HostSchema.set('toJSON', { virtuals: true })
-      HostSchema.plugin(mongooseHidden)
+      HostSchema.plugin(mongooseHidden, { applyRecursively: true })
       const Host = mongoose.model('Host', HostSchema)
 
       Host.create({ name: 'Main', credentials: [{ login: 'root', password: '123456' }] }).then(() => {
