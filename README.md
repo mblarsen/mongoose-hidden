@@ -1,6 +1,6 @@
 # mongoose-hidden
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -191,6 +191,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/awelllle"><img src="https://avatars0.githubusercontent.com/u/25726727?v=4" width="100px;" alt=""/><br /><sub><b>Awele</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/commits?author=awelllle" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/AlbertHambardzumyan"><img src="https://avatars3.githubusercontent.com/u/11527341?v=4" width="100px;" alt=""/><br /><sub><b>Albert Hambardzumyan</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/commits?author=AlbertHambardzumyan" title="Tests">⚠️</a> <a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3AAlbertHambardzumyan" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/proswdev"><img src="https://avatars3.githubusercontent.com/u/9143637?v=4" width="100px;" alt=""/><br /><sub><b>proswdev</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3Aproswdev" title="Bug reports">🐛</a> <a href="https://github.com/mblarsen/mongoose-hidden/commits?author=proswdev" title="Tests">⚠️</a> <a href="https://github.com/mblarsen/mongoose-hidden/commits?author=proswdev" title="Code">💻</a></td>
+    <td align="center"><a href="https://twitter.com/ohnobinki"><img src="https://avatars2.githubusercontent.com/u/82626?v=4" width="100px;" alt=""/><br /><sub><b>Nathan Phillip Brink</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/commits?author=binki" title="Documentation">📖</a></td>
   </tr>
 </table>
 
