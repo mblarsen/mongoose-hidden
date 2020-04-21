@@ -1,8 +1,9 @@
 # Changelog
 
-next
+1.9.0
 
 - feat: support for nested documents (issue #83)
+- chore: remove dependency on 'debug'
 
 1.8.1
 
