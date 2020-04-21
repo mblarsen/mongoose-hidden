@@ -1,6 +1,6 @@
 {
   "name": "mongoose-hidden",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "author": "Michael Bøcker-Larsen <m19n@pm.me>",
   "description": "Hides certain model properties when invoking toJSON or toObject.",
   "keywords": [
