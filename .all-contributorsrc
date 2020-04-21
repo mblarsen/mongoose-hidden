@@ -74,6 +74,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Bajix",
+      "name": "Thomas Sieverding",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4229773?v=4",
+      "profile": "https://github.com/Bajix",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
