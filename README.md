@@ -1,6 +1,6 @@
 # mongoose-hidden
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -187,6 +187,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Santinell"><img src="https://avatars2.githubusercontent.com/u/3122009?v=4" width="100px;" alt=""/><br /><sub><b>Pavel Evdokimov</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3ASantinell" title="Bug reports">🐛</a> <a href="#maintenance-Santinell" title="Maintenance">🚧</a> <a href="https://github.com/mblarsen/mongoose-hidden/commits?author=Santinell" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://www.codeboutique.com"><img src="https://avatars0.githubusercontent.com/u/247048?v=4" width="100px;" alt=""/><br /><sub><b>Michael Bøcker-Larsen</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/commits?author=mblarsen" title="Code">💻</a> <a href="https://github.com/mblarsen/mongoose-hidden/commits?author=mblarsen" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/marshalys"><img src="https://avatars3.githubusercontent.com/u/344530?v=4" width="100px;" alt=""/><br /><sub><b>mars</b></sub></a><br /><a href="https://github.com/mblarsen/mongoose-hidden/issues?q=author%3Amarshalys" title="Bug reports">🐛</a> <a href="#maintenance-marshalys" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
