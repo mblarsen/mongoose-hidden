@@ -1,5 +1,9 @@
 # Changelog
 
+next
+
+- feat: support for nested documents (issue #83)
+
 1.8.1
 
 - fix bug introduced in 1.7.0 when populating relations using `match` (issue #75)

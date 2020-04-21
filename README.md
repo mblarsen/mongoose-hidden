@@ -136,6 +136,11 @@ For nested virtuals use the path for the key above, e.g. `'nested.virtual': 'hid
 
 _Note: If you don't turn on virtuals for `toObject`, `fullname` in the above example `fullname` will *NOT* be hidden despite its `hideJSON` value._
 
+### Option: `applyRecursively`
+
+Off by default, but when turned on the plugin will attach itself to any child
+schemas as well.
+
 ### Transform
 
 The `mongoose-hidden` is written as a transform function. If you implement your own transform functions be sure to add them prior to applying the plugin. The plugin will then invoke that function before hiding properties.
@@ -167,5 +172,3 @@ See [CHANGELOG.md](https://github.com/mblarsen/mongoose-hidden/blob/master/CHANG
 schema.set('toJSON', { getters: true, virtuals: true });
 schema.plugin(require(mongooseHidden));
 ```
-
-* Recursive use of hide not supported, but nested documents/objects are supported.
