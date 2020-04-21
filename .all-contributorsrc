@@ -54,6 +54,17 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "proswdev",
+      "name": "proswdev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9143637?v=4",
+      "profile": "https://github.com/proswdev",
+      "contributions": [
+        "bug",
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
