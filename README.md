@@ -67,33 +67,24 @@ function (doc, ret) // same as the transform function callback
 
 If you find yourself hiding the same properties over and over again you can initialize the plugin with the `hidden` option.
 
-There are two methods: when creating the plugin and when attaching the plugin, and they can be combined.
-
-#### Method 1: constructor param
+There are two ways to set this up and they can be combined for more granular control.
 
 ```javascript
-let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
+// Passing constructor parameters
+const mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
 UserSchema.plugin(mongooseHidden)
-```
 
-#### Method 2: attach plugin param
-
-```javascript
-let mongooseHidden = require('mongoose-hidden')()
+// Passing plugin parameters when attaching to schema
+const mongooseHidden = require('mongoose-hidden')()
 UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
-```
 
-#### Method 1+2: combination
-
-```javascript
-let mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
+// Here they are used together
+const mongooseHidden = require('mongoose-hidden')({ hidden: { _id: true, password: true } })
 UserSchema.plugin(mongooseHidden, { hidden: { resetToken: true } })
 PaymentSchema.plugin(mongooseHidden, { hidden: { _id: false, authToken: true } }) // unhides _id
-```
 
-.. another example:
+//.. another example:
 
-```javascript
 if (app === 'web') {
   UserSchema.plugin(mongooseHidden, { hidden: { _id: true, password: true } })
 } else if (app == 'private-api') {
@@ -122,11 +113,11 @@ Hiding of virtuals can be done as well. Be sure to include the plugin after you 
 
 ```javascript
 // By default in Mongoose virtuals will not be included. Turn on before enabling plugin.
-schema.set('toJSON', { virtuals: true });
-schema.set('toObject', { virtuals: true });
+schema.set('toJSON', { virtuals: true })
+schema.set('toObject', { virtuals: true })
 
 // Enable plugin
-schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' }});
+schema.plugin(mongooseHidden, { virtuals: { fullname: 'hideJSON' } })
 ```
 
 The value of the virtuals key can be: `hide`, `hideJSON` and `hideObject`.
@@ -148,10 +139,12 @@ The `mongoose-hidden` is written as a transform function. If you implement your 
 let mongooseHidden = require('mongoose-hidden')()
 
 // First define transform function
-UserSchema.set('toJSON', { transform: function (doc, ret, opt) {
-  ret['name'] = 'Mr ' + ret['name']
-  return ret
-}})
+UserSchema.set('toJSON', {
+  transform: function (doc, ret, opt) {
+    ret['name'] = 'Mr ' + ret['name']
+    return ret
+  },
+})
 
 // Then apply plugin
 UserSchema.plugin(mongooseHidden)
@@ -165,11 +158,11 @@ See [CHANGELOG.md](https://github.com/mblarsen/mongoose-hidden/blob/master/CHANG
 
 # Limitations
 
-* Always set `{ getters: true, virtuals: true }` before installing plugin if you want virtuals to be returned:
+- Always set `{ getters: true, virtuals: true }` before installing plugin if you want virtuals to be returned:
 
 ```javascript
-schema.set('toJSON', { getters: true, virtuals: true });
-schema.plugin(require(mongooseHidden));
+schema.set('toJSON', { getters: true, virtuals: true })
+schema.plugin(require(mongooseHidden))
 ```
 
 ## Contributors ✨
@@ -198,6 +191,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
