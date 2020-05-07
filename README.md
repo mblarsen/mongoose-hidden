@@ -1,4 +1,4 @@
-# mongoose-hidden
+# mongoose-hidden :see_no_evil:
 
 [![Build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden)
 [![codebeat badge](https://codebeat.co/badges/05e78d4b-9038-4339-8e67-0702cc4416a2)](https://codebeat.co/projects/github-com-mblarsen-mongoose-hidden-master)
