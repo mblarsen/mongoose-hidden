@@ -5,5 +5,7 @@ node_js:
   - 8
   - 9
   - 10
+  - 12
+  - 14
 services: mongodb
 script: travis_retry npm run test
