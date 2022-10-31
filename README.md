@@ -1,3 +1,9 @@
+# :warning: Maintainer Wanted :warning:
+
+Due lack of time I've decided to not actively maintain this repo any more. I will apply any security related PRs from bots and the community. The package has been stable for quite a long while. There is the odd bug or edge case, but they are far apart and other than that It Just Works:tm:.
+
+I still care to see this package live on, so should any individual, company, or open-source organziation want to take over the project please contact me.
+
 # mongoose-hidden :see_no_evil:
 
 [![Build status](http://img.shields.io/travis/mblarsen/mongoose-hidden.svg)](http://travis-ci.org/mblarsen/mongoose-hidden)
